@@ -1,1 +1,17 @@
-{}
+{
+  "GET /api/users/:username": {
+    "description": "returns the data of a specific user",
+    "queries": [],
+    "exampleResponse": {
+      "user": {
+        "username": "biscuitsabloom",
+        "first_name": "Arty",
+        "last_name": "Kramer",
+        "email": "akramer5@illinois.edu",
+        "password": "xJ2?RX)M",
+        "lists": [],
+        "recipes": ["Mr"]
+      }
+    }
+  }
+}

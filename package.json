@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "prepare": "husky install",
+    "prepare": "husky",
     "start": "node ./api/listen.js"
   },
   "keywords": [],

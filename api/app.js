@@ -8,4 +8,9 @@ app.use(express.json());
 
 app.use("/api", apiRouter);
 
+app.use((error, request, response, next) => {
+    if (error.status && error.message) {
+      response.status(error.status).send(error)
+    }
+  })
 module.exports = app;

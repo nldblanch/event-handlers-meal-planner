@@ -58,3 +58,34 @@ describe("/api/lists/:username", () => {
       });
   });
 });
+
+describe("/users/:username", () => {
+  describe("GET", () => {
+    it("200: responsds with user", () => {
+      const username = "biscuitsabloom"
+      return request(app)
+      .get(`/api/users/${username}`)
+      .expect(200)
+      .then(({body: {user}}) => {
+        console.log(user);
+        
+        const {first_name, last_name, lists, password, recipes} = user
+        expect(user.username).toBe(username)
+        expect(typeof first_name).toBe("string")
+        expect(typeof last_name).toBe("string")
+        expect(Array.isArray(lists)).toBe(true)
+        expect(typeof password).toBe("string")
+        expect(Array.isArray(recipes)).toBe(true)
+      })
+    })
+    it("404: returns not found when user does not exist", () => {
+      const username = "nottherightuser"
+      return request(app)
+      .get(`/api/users/${username}`)
+      .expect(404)
+      .then(({body: {message}}) => {
+        expect(message).toBe("User not found.")
+      })
+    })
+  })
+})
