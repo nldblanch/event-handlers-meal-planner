@@ -1,46 +1,85 @@
 const {
   collection,
   getDocs,
-  addDoc,
   deleteDoc,
   doc,
+  setDoc,
 } = require("firebase/firestore");
 const db = require("../connection");
 const data = require("../data/test-data");
 
-const seed = ({ shoppingItems, recipes, users }) => {
-  const colRef = collection(db, "users");
-  getDocs(colRef)
-    .then((res) => {
-      const user_ids = res.docs.map((document) => {
-        return deleteDoc(doc(db, "users", document.id));
-      });
-      return Promise.all(user_ids);
+const seed = ({ lists, recipes, users }) => {
+  const listsRef = collection(db, "lists");
+  const usersRef = collection(db, "users");
+  const recipesRef = collection(db, "recipes");
+  dropLists(listsRef)
+    .then(() => {
+      return dropRecipes(recipesRef);
     })
     .then(() => {
-      const promiseArray = [];
-      users.forEach(({ first_name, last_name, email, password }) => {
-        promiseArray.push(
-          addDoc(colRef, { first_name, last_name, email, password })
-        );
-      });
-      return Promise.all(promiseArray);
+      return dropUsers(usersRef);
     })
-    .then((res) => {
-      console.log(res);
+    .then(() => {
+      return Promise.all(insertLists(listsRef, lists));
+    })
+    .then(() => {
+      return Promise.all(insertUsers(usersRef, users));
+    })
+    .then(() => {
+      return Promise.all(insertRecipes(recipesRef, recipes));
     })
     .catch((err) => {
-      console.log(err);
+      
     });
-
-  //drop table lists
-  //drop table recipes
-  //drop table users
-  //create users
-  //create recipes
-  //create lists
-  //insert into users
-  //insert into recipes
-  //insert into lists
 };
-seed(data);
+
+const dropLists = (listsRef) => {
+  return getDocs(listsRef).then((res) => {
+    const list_ids = res.docs.map((document) => {
+      return deleteDoc(doc(db, "lists", document.id));
+    });
+    return Promise.all(list_ids);
+  });
+};
+const dropRecipes = (recipesRef) => {
+  return getDocs(recipesRef).then((res) => {
+    const recipe_ids = res.docs.map((document) => {
+      return deleteDoc(doc(db, "recipes", document.id));
+    });
+    return Promise.all(recipe_ids);
+  });
+};
+const dropUsers = (usersRef) => {
+  return getDocs(usersRef).then((res) => {
+    const user_ids = res.docs.map((document) => {
+      return deleteDoc(doc(db, "users", document.id));
+    });
+    return Promise.all(user_ids);
+  });
+};
+const insertUsers = (usersRef, users) => {
+  const promiseArray = [];
+  users.forEach((user) => {
+    const docRef = doc(usersRef, user.username);
+    promiseArray.push(setDoc(docRef, user));
+  });
+  return promiseArray;
+};
+const insertRecipes = (recipesRef, recipes) => {
+  const promiseArray = [];
+  recipes.forEach((recipe) => {
+    const docRef = doc(recipesRef, recipe.recipe_name);
+    promiseArray.push(setDoc(docRef, recipe));
+  });
+  return promiseArray;
+};
+const insertLists = (listsRef, lists) => {
+  const promiseArray = [];
+  lists.forEach((list, index) => {
+    const docRef = doc(listsRef, String(index));
+    promiseArray.push(setDoc(docRef, list));
+  });
+  return promiseArray;
+};
+
+module.exports = { seed };

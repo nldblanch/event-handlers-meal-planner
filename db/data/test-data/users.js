@@ -1,38 +1,56 @@
 module.exports = [
   {
-    "first_name": "Mariel",
-    "last_name": "Renard",
-    "email": "mrenard0@auda.org.au",
-    "password": "hS0$CU}P"
+    username: "teawalrusstorm",
+    first_name: "Mariel",
+    last_name: "Renard",
+    email: "mrenard0@auda.org.au",
+    password: "hS0$CU}P",
+    lists: [0],
+    recipes: [],
   },
   {
-    "first_name": "Kelley",
-    "last_name": "Huffy",
-    "email": "khuffy1@deviantart.com",
-    "password": "yA3*Ub#Pil9MI26"
+    username: "rocketvoyager1",
+    first_name: "Kelley",
+    last_name: "Huffy",
+    email: "khuffy1@deviantart.com",
+    password: "yA3*Ub#Pil9MI26",
+    lists: [0],
+    recipes: [],
   },
   {
-    "first_name": "Tessy",
-    "last_name": "Teresi",
-    "email": "tteresi2@mtv.com",
-    "password": "uE9!gpj@C"
+    username: "cityofgodshark",
+    first_name: "Tessy",
+    last_name: "Teresi",
+    email: "tteresi2@mtv.com",
+    password: "uE9!gpj@C",
+    lists: [1],
+    recipes: ["Honorable, Rev"],
   },
   {
-    "first_name": "Anastasia",
-    "last_name": "Eland",
-    "email": "aeland3@ft.com",
-    "password": "lX8/PL>Om{zXfURK"
+    username: "doryransunrise",
+    first_name: "Anastasia",
+    last_name: "Eland",
+    email: "aeland3@ft.com",
+    password: "lX8/PL>Om{zXfURK",
+    lists: [],
+    recipes: [],
   },
   {
-    "first_name": "Gerick",
-    "last_name": "Starmore",
-    "email": "gstarmore4@springer.com",
-    "password": "jR3\"1*6bxb"
+    username: "thegraduateweb",
+    first_name: "Gerick",
+    last_name: "Starmore",
+    email: "gstarmore4@springer.com",
+    password: 'jR3"1*6bxb',
+    lists: [],
+    recipes: ["Dr"],
   },
   {
-    "first_name": "Arty",
-    "last_name": "Kramer",
-    "email": "akramer5@illinois.edu",
-    "password": "xJ2?RX)M"
-  }
-]
+    username: "biscuitsabloom",
+    first_name: "Arty",
+    last_name: "Kramer",
+    email: "akramer5@illinois.edu",
+    password: "xJ2?RX)M",
+    lists: [],
+    recipes: ["Mr"],
+  },
+];
