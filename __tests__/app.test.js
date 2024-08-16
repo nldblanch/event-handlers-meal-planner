@@ -25,3 +25,36 @@ describe("GET: /api", () => {
       });
   });
 });
+
+describe("/api/lists/:username", () => {
+  it("GET: 200 it should respond with the lists (list id, isPrivate and list_name) associated for each user", () => {
+    return request(app)
+      .get("/api/lists/cityofgodshark")
+      .expect(200)
+      .then(({ body: { lists } }) => {
+        expect(lists.length).toBeGreaterThan(0);
+        lists.forEach((list) => {
+          expect(list).toMatchObject({
+            list_id: expect.any(String),
+            list_name: expect.any(String),
+            isPrivate: expect.any(Boolean),
+          });
+        });
+      });
+  });
+  it("GET: 200 it should respond with the lists (list id, isPrivate and list_name) associated for each user", () => {
+    return request(app)
+      .get("/api/lists/teawalrusstorm")
+      .expect(200)
+      .then(({ body: { lists } }) => {
+        expect(lists.length).toBeGreaterThan(0);
+        lists.forEach((list) => {
+          expect(list).toMatchObject({
+            list_id: expect.any(String),
+            list_name: expect.any(String),
+            isPrivate: expect.any(Boolean),
+          });
+        });
+      });
+  });
+});
