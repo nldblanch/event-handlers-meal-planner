@@ -58,6 +58,22 @@ describe("/api/lists/:username", () => {
           });
         });
     });
+    it("400: responds with an error when the username does not exist", () => {
+      return request(app)
+        .get("/api/lists/Lian")
+        .expect(404)
+        .then(({ body: { message } }) => {
+          expect(message).toBe("User not found.");
+        });
+    });
+    it("200: responds with an empty array if user exists but has no lists", () => {
+      return request(app)
+        .get("/api/lists/doryransunrise")
+        .expect(200)
+        .then(({ body: { lists } }) => {
+          expect(lists).toEqual([]);
+        });
+    });
   });
 });
 
