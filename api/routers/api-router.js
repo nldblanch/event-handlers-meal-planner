@@ -1,5 +1,6 @@
 const apiRouter = require("express").Router();
 
+const { getEndpoints } = require("../../controllers/endpoints-controller");
 const { users, lists, recipes } = require("./index");
 
 apiRouter.use("/users", users);
