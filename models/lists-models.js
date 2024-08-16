@@ -8,7 +8,9 @@ exports.fetchListsByUsername = (username) => {
   return getDoc(doc(usersRef, username))
     .then((data) => {
       const list_ids = data.data().lists;
-      lists_data = list_ids.map((id) => getDoc(doc(listRef, "1")));
+      lists_data = list_ids.map((id) => {
+        return getDoc(doc(listRef, String(id)));
+      });
       return Promise.all(lists_data);
     })
     .then((lists_data) => {
