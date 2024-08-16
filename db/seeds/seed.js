@@ -12,7 +12,7 @@ const seed = ({ lists, recipes, users }) => {
   const listsRef = collection(db, "lists");
   const usersRef = collection(db, "users");
   const recipesRef = collection(db, "recipes");
-  dropLists(listsRef)
+  return dropLists(listsRef)
     .then(() => {
       return dropRecipes(recipesRef);
     })
