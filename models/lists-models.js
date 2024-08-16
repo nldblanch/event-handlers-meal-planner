@@ -6,8 +6,11 @@ const usersRef = collection(db, "users");
 
 exports.fetchListsByUsername = (username) => {
   return getDoc(doc(usersRef, username))
-    .then((data) => {
-      const list_ids = data.data().lists;
+    .then((user) => {
+      if (!user.data()) {
+        return Promise.reject({ status: 404, message: "User not found." });
+      }
+      const list_ids = user.data().lists;
       lists_data = list_ids.map((id) => {
         return getDoc(doc(listRef, String(id)));
       });
