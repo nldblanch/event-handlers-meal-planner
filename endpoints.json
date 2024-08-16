@@ -13,5 +13,27 @@
         "recipes": ["Mr"]
       }
     }
+  },
+  "POST /api/users": {
+    "description": "allows client to post user to database",
+    "queries": [],
+    "format": {
+      "username": "nldblanch",
+      "first_name": "Nathan",
+      "last_name": "Blanch",
+      "email": "saxewil683@iteradev.com",
+      "password": "testPassword"
+    },
+    "exampleResponse": {
+      "user": {
+        "username": "nldblanch",
+        "first_name": "Nathan",
+        "last_name": "Blanch",
+        "email": "saxewil683@iteradev.com",
+        "password": "testPassword",
+        "lists": [],
+        "recipes": []
+      }
+    }
   }
 }
