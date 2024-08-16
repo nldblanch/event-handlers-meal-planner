@@ -1,4 +1,4 @@
-[
+module.exports = [
   { "item_name": "Pepsi - Diet, 355 Ml", "amount": "4" },
   { "item_name": "Onion Powder", "amount": "1" },
   { "item_name": "Saskatoon Berries - Frozen", "amount": "1" },
