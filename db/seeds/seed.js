@@ -67,8 +67,8 @@ const insertUsers = (usersRef, users) => {
 };
 const insertRecipes = (recipesRef, recipes) => {
   const promiseArray = [];
-  recipes.forEach((recipe) => {
-    const docRef = doc(recipesRef, recipe.recipe_name);
+  recipes.forEach((recipe, index) => {
+    const docRef = doc(recipesRef, String(index));
     promiseArray.push(setDoc(docRef, recipe));
   });
   return promiseArray;

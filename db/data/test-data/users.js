@@ -24,7 +24,7 @@ module.exports = [
     email: "tteresi2@mtv.com",
     password: "uE9!gpj@C",
     lists: [1],
-    recipes: ["Honorable", "Rev"],
+    recipes: [0, 1],
   },
   {
     username: "doryransunrise",
@@ -42,7 +42,7 @@ module.exports = [
     email: "gstarmore4@springer.com",
     password: 'jR3"1*6bxb',
     lists: [],
-    recipes: ["Dr"],
+    recipes: [2],
   },
   {
     username: "biscuitsabloom",
@@ -51,6 +51,6 @@ module.exports = [
     email: "akramer5@illinois.edu",
     password: "xJ2?RX)M",
     lists: [],
-    recipes: ["Mr"],
+    recipes: [3],
   },
 ];

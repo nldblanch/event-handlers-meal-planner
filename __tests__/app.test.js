@@ -196,6 +196,7 @@ describe("/api/users/:username/recipes", () => {
           expect(Array.isArray(recipes)).toBe(true);
           recipes.forEach((recipe) => {            
             expect(recipe).toMatchObject({
+              recipe_id: expect.any(String),
               cook_time: expect.any(Number),
               ingredients: expect.any(String),
               instructions: expect.any(String),

@@ -49,6 +49,7 @@
     "exampleResponse": {
       "recipes": [
         {
+          "recipe_id": 0,
           "cook_time": 102,
           "ingredients": "Proin interdum mauris non ligula pellentesque ultrices.",
           "instructions": "Aenean lectus. Pellentesque eget nunc.",

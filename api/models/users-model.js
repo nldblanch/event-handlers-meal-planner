@@ -24,12 +24,13 @@ exports.fetchRecipesByUsername = (username) => {
     if (!user.data()) {
       return Promise.reject({ status: 404, message: "User not found." });
     }
-    const recipes = user.data().recipes.map((recipeName) => {
-      return getDoc(doc(recipesRef, recipeName));
+    const recipes = user.data().recipes.map((recipeId) => {
+      return getDoc(doc(recipesRef, String(recipeId)));
     });
     return Promise.all(recipes).then((recipesData) => {
       return recipesData.map((recipe) => {
         return {
+          recipe_id: recipe.id,
           ...recipe.data(),
         };
       });
