@@ -3,6 +3,7 @@ const {
   fetchListsByUsername,
   fetchListById,
   updateList,
+  addList,
 } = require("../models/lists-models");
 
 exports.getListsByUsername = (request, resposne, next) => {
@@ -38,6 +39,17 @@ exports.patchList = (request, response, next) => {
       if (err.code === "not-found") {
         next({ status: 404, message: "List not found" });
       }
+      next(err);
+    });
+};
+
+exports.postList = (request, response, next) => {
+  const { list_name, isPrivate } = request.body;
+  addList(list_name, isPrivate)
+    .then((list) => {
+      response.status(201).send({ list });
+    })
+    .catch((err) => {
       next(err);
     });
 };
