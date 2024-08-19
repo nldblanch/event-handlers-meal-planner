@@ -3,6 +3,7 @@ const {
   addUserToDatabase,
   fetchRecipesByUsername,
   addListToUser,
+  removeListfromUser
 } = require("../models/users-model");
 
 exports.getUserByUsername = (request, response, next) => {
@@ -38,6 +39,16 @@ exports.postListToUser = (request, response, next) => {
   addListToUser(username, list_id)
     .then((user) => {
       response.status(201).send({ user });
+    })
+    .catch(next);
+};
+
+exports.deleteListFromUser = (request, response, next) => {
+  const { username } = request.params;
+  const { list_id } = request.body;
+  removeListfromUser(username, list_id)
+    .then((user) => {      
+      response.status(200).send({ user });
     })
     .catch(next);
 };
