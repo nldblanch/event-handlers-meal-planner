@@ -273,10 +273,3 @@ describe("/api/lists/:list_id", () => {
   });
 });
 
-describe("/api/recipes/:recipe_id", () => {
-  describe("GET", () => {
-    it("200: returns specified recipe", () => {
-      
-    })
-  })
-})
