@@ -1,4 +1,7 @@
-const { fetchListsByUsername } = require("../models/lists-models");
+const {
+  fetchListsByUsername,
+  fetchListById,
+} = require("../models/lists-models");
 
 exports.getListsByUsername = (request, resposne, next) => {
   const { username } = request.params;
@@ -11,4 +14,13 @@ exports.getListsByUsername = (request, resposne, next) => {
     });
 };
 
-exports.getListById = (request, response, next) => {};
+exports.getListById = (request, response, next) => {
+  const { list_id } = request.params;
+  fetchListById(list_id)
+    .then((list) => {
+      response.status(200).send({ list });
+    })
+    .catch((err) => {
+      next(err);
+    });
+};
