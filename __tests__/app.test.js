@@ -271,7 +271,7 @@ describe("/api/lists/:list_id", () => {
         });
     });
   });
-  describe.only("PATCH", () => {
+  describe("PATCH", () => {
     it("200: responds with the updates list when changing the name", () => {
       return request(app)
         .patch("/api/lists/1")
