@@ -85,7 +85,7 @@ describe("/api/lists/:list_id", () => {
   });
 });
 
-describe("/users/:username", () => {
+describe("api/users/:username", () => {
   describe("GET", () => {
     it("200: responsds with user", () => {
       const username = "biscuitsabloom";
@@ -114,8 +114,7 @@ describe("/users/:username", () => {
   });
 });
 
-
-describe("/users", () => {
+describe("/api/users", () => {
   describe("POST", () => {
     it("201: responds with the created user", () => {
       const body = {
@@ -124,18 +123,18 @@ describe("/users", () => {
         last_name: "Blanch",
         email: "saxewil683@iteradev.com",
         password: "testPassword",
-      }
+      };
       return request(app)
-      .post(`/api/users`)
-      .send(body)
-      .expect(201)
-      .then(({body: {user}}) => {
-        expect(user).toMatchObject(body)
-        const {lists, recipes} = user
-        expect(lists).toEqual([])
-        expect(recipes).toEqual([])
-      })
-    })
+        .post(`/api/users`)
+        .send(body)
+        .expect(201)
+        .then(({ body: { user } }) => {
+          expect(user).toMatchObject(body);
+          const { lists, recipes } = user;
+          expect(lists).toEqual([]);
+          expect(recipes).toEqual([]);
+        });
+    });
     it("400: responds with bad request when incorrect keys given", () => {
       const body = {
         name: "nldblanch",
@@ -143,30 +142,30 @@ describe("/users", () => {
         last_name: "Blanch",
         email: "saxewil683@iteradev.com",
         password: "testPassword",
-      }
+      };
       return request(app)
-      .post(`/api/users`)
-      .send(body)
-      .expect(400)
-      .then(({body: {message}}) => {
-       expect(message).toBe("Bad request - invalid key on object.")
-      })
-    })
+        .post(`/api/users`)
+        .send(body)
+        .expect(400)
+        .then(({ body: { message } }) => {
+          expect(message).toBe("Bad request - invalid key on object.");
+        });
+    });
     it("400: responds with bad request required keys are missing", () => {
       const body = {
         first_name: "Nathan",
         last_name: "Blanch",
         email: "saxewil683@iteradev.com",
         password: "testPassword",
-      }
+      };
       return request(app)
-      .post(`/api/users`)
-      .send(body)
-      .expect(400)
-      .then(({body: {message}}) => {
-       expect(message).toBe("Bad request - key missing on object.")
-      })
-    })
+        .post(`/api/users`)
+        .send(body)
+        .expect(400)
+        .then(({ body: { message } }) => {
+          expect(message).toBe("Bad request - key missing on object.");
+        });
+    });
     it("400: responds with bad request when user already exists", () => {
       const body = {
         username: "biscuitsabloom",
@@ -174,14 +173,55 @@ describe("/users", () => {
         last_name: "Blanch",
         email: "saxewil683@iteradev.com",
         password: "testPassword",
-      }
+      };
       return request(app)
-      .post(`/api/users`)
-      .send(body)
-      .expect(400)
-      .then(({body: {message}}) => {
-       expect(message).toBe("Bad request - username already taken.")
-      })
+        .post(`/api/users`)
+        .send(body)
+        .expect(400)
+        .then(({ body: { message } }) => {
+          expect(message).toBe("Bad request - username already taken.");
+        });
+    });
+  });
+});
+
+describe("/api/users/:username/recipes", () => {
+  describe("GET", () => {
+    it("200: returns an array of recipe objects associated with the user", () => {
+      const username = "cityofgodshark";
+      return request(app)
+        .get(`/api/users/${username}/recipes`)
+        .expect(200)
+        .then(({ body: { recipes } }) => {
+          expect(Array.isArray(recipes)).toBe(true);
+          recipes.forEach((recipe) => {            
+            expect(recipe).toMatchObject({
+              cook_time: expect.any(Number),
+              ingredients: expect.any(String),
+              instructions: expect.any(String),
+              prep_time: expect.any(Number),
+              recipe_name: expect.any(String),
+            });
+          });
+        });
+    });
+    it("200: returns an empty array when user has no recipes", () => {
+      const username = "doryransunrise";
+      return request(app)
+        .get(`/api/users/${username}/recipes`)
+        .expect(200)
+        .then(({ body: { recipes } }) => {
+          expect(recipes).toEqual([]);
+        });
+    });
+    it("404: responds not found when user doesn't exist", () => {
+      const username = "nottherightuser";
+      return request(app)
+        .get(`/api/users/${username}`)
+        .expect(404)
+        .then(({ body: { message } }) => {
+          expect(message).toBe("User not found.");
+        });
     })
-  })
-})
+  });
+});

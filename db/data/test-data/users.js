@@ -24,7 +24,7 @@ module.exports = [
     email: "tteresi2@mtv.com",
     password: "uE9!gpj@C",
     lists: [1],
-    recipes: ["Honorable, Rev"],
+    recipes: ["Honorable", "Rev"],
   },
   {
     username: "doryransunrise",
