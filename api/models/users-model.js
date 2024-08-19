@@ -1,4 +1,10 @@
-const { collection, getDocs, doc, setDoc } = require("firebase/firestore");
+const {
+  collection,
+  getDocs,
+  doc,
+  setDoc,
+  getDoc,
+} = require("firebase/firestore");
 const db = require("../../db/connection");
 
 exports.fetchUserByUsername = (username) => {
@@ -11,6 +17,26 @@ exports.fetchUserByUsername = (username) => {
     if (!user)
       return Promise.reject({ status: 404, message: "User not found." });
     else return user.data();
+  });
+};
+
+exports.fetchRecipesByUsername = (username) => {
+  const usersRef = collection(db, "users");
+  const recipesRef = collection(db, "recipes");
+  return getDoc(doc(usersRef, username)).then((user) => {
+    if (!user.data()) {
+      return Promise.reject({ status: 404, message: "User not found." });
+    }
+    const recipes = user.data().recipes.map((recipeName) => {
+      return getDoc(doc(recipesRef, recipeName));
+    });
+    return Promise.all(recipes).then((recipesData) => {
+      return recipesData.map((recipe) => {
+        return {
+          ...recipe.data(),
+        };
+      });
+    });
   });
 };
 

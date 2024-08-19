@@ -42,5 +42,20 @@
     "exampleResponse": [
       { "list_id": 0, "list_name": "my shopping list", "isPrivate": false }
     ]
+  },
+  "GET /api/users/:username/recipes": {
+    "description": "get all recipes associated with a user",
+    "queries": [],
+    "exampleResponse": {
+      "recipes": [
+        {
+          "cook_time": 102,
+          "ingredients": "Proin interdum mauris non ligula pellentesque ultrices.",
+          "instructions": "Aenean lectus. Pellentesque eget nunc.",
+          "prep_time": 92,
+          "recipe_name": "Rev"
+        }
+      ]
+    }
   }
 }
