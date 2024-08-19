@@ -97,7 +97,7 @@
     "exampleResponse": {
       "isPrivate": true,
       "list_name": "my groceries",
-      "list": [{ "amount": 4, "item_name": "Coke - Diet, 355 Ml" }],
+      "items": [{ "amount": 4, "item_name": "Coke - Diet, 355 Ml" }],
       "list_id": "1"
     }
   },
@@ -138,6 +138,16 @@
         "prep_time": 15,
         "recipe_name": "Scrambled eggs"
       }
+    }
+  },
+  "PATCH /api/lists/:list_id": {
+    "description": "edit the list_name, isPrivate property or both",
+    "format": { "isPrivate": true, "list_name": "family shopping" },
+    "queries": [],
+    "exampleResponse": {
+      "list_id": "0",
+      "isPrivate": true,
+      "list_name": "family shopping"
     }
   }
 }
