@@ -35,5 +35,12 @@
         "recipes": []
       }
     }
+  },
+  "GET /api/lists/:username": {
+    "description": "get all the lists associated with a user",
+    "queries": [],
+    "exampleResponse": [
+      { "list_id": 0, "list_name": "my shopping list", "isPrivate": false }
+    ]
   }
 }

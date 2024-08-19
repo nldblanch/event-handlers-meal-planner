@@ -10,3 +10,5 @@ exports.getListsByUsername = (request, resposne, next) => {
       next(err);
     });
 };
+
+exports.getListById = (request, response, next) => {};

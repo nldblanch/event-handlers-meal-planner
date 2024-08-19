@@ -1,9 +1,12 @@
-const { getListsByUsername } = require("../../controllers/lists-controllers");
+const {
+  getListsByUsername,
+  getListById,
+} = require("../../controllers/lists-controllers");
 
 const listsRouter = require("express").Router();
 
 listsRouter.route("/");
 
-listsRouter.get("/:username", getListsByUsername);
+listsRouter.get("/:list_id", getListById);
 
 module.exports = listsRouter;

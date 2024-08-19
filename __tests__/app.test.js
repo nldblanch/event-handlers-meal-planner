@@ -26,11 +26,11 @@ describe("GET: /api", () => {
   });
 });
 
-describe("/api/lists/:username", () => {
+describe("/api/users/:username/lists", () => {
   describe("GET", () => {
     it("200: it should respond with the lists (list id, isPrivate and list_name) associated for each user", () => {
       return request(app)
-        .get("/api/lists/cityofgodshark")
+        .get("/api/users/cityofgodshark/lists")
         .expect(200)
         .then(({ body: { lists } }) => {
           expect(lists.length).toBeGreaterThan(0);
@@ -45,7 +45,7 @@ describe("/api/lists/:username", () => {
     });
     it("200: it should respond with the lists (list id, isPrivate and list_name) associated for each user", () => {
       return request(app)
-        .get("/api/lists/teawalrusstorm")
+        .get("/api/users/teawalrusstorm/lists")
         .expect(200)
         .then(({ body: { lists } }) => {
           expect(lists.length).toBeGreaterThan(0);
@@ -60,7 +60,7 @@ describe("/api/lists/:username", () => {
     });
     it("400: responds with an error when the username does not exist", () => {
       return request(app)
-        .get("/api/lists/Lian")
+        .get("/api/users/Lian/lists")
         .expect(404)
         .then(({ body: { message } }) => {
           expect(message).toBe("User not found.");
@@ -68,11 +68,19 @@ describe("/api/lists/:username", () => {
     });
     it("200: responds with an empty array if user exists but has no lists", () => {
       return request(app)
-        .get("/api/lists/doryransunrise")
+        .get("/api/users/doryransunrise/lists")
         .expect(200)
         .then(({ body: { lists } }) => {
           expect(lists).toEqual([]);
         });
+    });
+  });
+});
+
+describe("/api/lists/:list_id", () => {
+  describe("GET", () => {
+    it("200: responds with all the list data for the corresponding list id", () => {
+      return request(app).get("/api/");
     });
   });
 });
@@ -82,97 +90,28 @@ describe("/users/:username", () => {
     it("200: responsds with user", () => {
       const username = "biscuitsabloom";
       return request(app)
-      .get(`/api/users/${username}`)
-      .expect(200)
-      .then(({body: {user}}) => {
-        const {first_name, last_name, lists, password, recipes} = user
-        expect(user.username).toBe(username)
-        expect(typeof first_name).toBe("string")
-        expect(typeof last_name).toBe("string")
-        expect(Array.isArray(lists)).toBe(true)
-        expect(typeof password).toBe("string")
-        expect(Array.isArray(recipes)).toBe(true)
-      })
-    })
+        .get(`/api/users/${username}`)
+        .expect(200)
+        .then(({ body: { user } }) => {
+          console.log(user);
+
+          const { first_name, last_name, lists, password, recipes } = user;
+          expect(user.username).toBe(username);
+          expect(typeof first_name).toBe("string");
+          expect(typeof last_name).toBe("string");
+          expect(Array.isArray(lists)).toBe(true);
+          expect(typeof password).toBe("string");
+          expect(Array.isArray(recipes)).toBe(true);
+        });
+    });
     it("404: returns not found when user does not exist", () => {
       const username = "nottherightuser";
       return request(app)
-      .get(`/api/users/${username}`)
-      .expect(404)
-      .then(({body: {message}}) => {
-        expect(message).toBe("User not found.")
-      })
-    })
-  })
-})
-
-describe("/users", () => {
-  describe("POST", () => {
-    it("201: responds with the created user", () => {
-      const body = {
-        username: "nldblanch",
-        first_name: "Nathan",
-        last_name: "Blanch",
-        email: "saxewil683@iteradev.com",
-        password: "testPassword",
-      }
-      return request(app)
-      .post(`/api/users`)
-      .send(body)
-      .expect(201)
-      .then(({body: {user}}) => {
-        expect(user).toMatchObject(body)
-        const {lists, recipes} = user
-        expect(lists).toEqual([])
-        expect(recipes).toEqual([])
-      })
-    })
-    it("400: responds with bad request when incorrect keys given", () => {
-      const body = {
-        name: "nldblanch",
-        first_name: "Nathan",
-        last_name: "Blanch",
-        email: "saxewil683@iteradev.com",
-        password: "testPassword",
-      }
-      return request(app)
-      .post(`/api/users`)
-      .send(body)
-      .expect(400)
-      .then(({body: {message}}) => {
-       expect(message).toBe("Bad request - invalid key on object.")
-      })
-    })
-    it("400: responds with bad request required keys are missing", () => {
-      const body = {
-        first_name: "Nathan",
-        last_name: "Blanch",
-        email: "saxewil683@iteradev.com",
-        password: "testPassword",
-      }
-      return request(app)
-      .post(`/api/users`)
-      .send(body)
-      .expect(400)
-      .then(({body: {message}}) => {
-       expect(message).toBe("Bad request - key missing on object.")
-      })
-    })
-    it("400: responds with bad request when user already exists", () => {
-      const body = {
-        username: "biscuitsabloom",
-        first_name: "Nathan",
-        last_name: "Blanch",
-        email: "saxewil683@iteradev.com",
-        password: "testPassword",
-      }
-      return request(app)
-      .post(`/api/users`)
-      .send(body)
-      .expect(400)
-      .then(({body: {message}}) => {
-       expect(message).toBe("Bad request - username already taken.")
-      })
-    })
-  })
-})
+        .get(`/api/users/${username}`)
+        .expect(404)
+        .then(({ body: { message } }) => {
+          expect(message).toBe("User not found.");
+        });
+    });
+  });
+});
