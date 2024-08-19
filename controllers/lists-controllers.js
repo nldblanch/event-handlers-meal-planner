@@ -1,6 +1,8 @@
+const { request } = require("../api/app");
 const {
   fetchListsByUsername,
   fetchListById,
+  updateList,
 } = require("../models/lists-models");
 
 exports.getListsByUsername = (request, resposne, next) => {
@@ -21,6 +23,21 @@ exports.getListById = (request, response, next) => {
       response.status(200).send({ list });
     })
     .catch((err) => {
+      next(err);
+    });
+};
+
+exports.patchList = (request, response, next) => {
+  const { list_id } = request.params;
+  const { list_name, isPrivate } = request.body;
+  updateList(list_id, list_name, isPrivate)
+    .then((data) => {
+      response.status(200).send({ list: data });
+    })
+    .catch((err) => {
+      if (err.code === "not-found") {
+        next({ status: 404, message: "List not found" });
+      }
       next(err);
     });
 };

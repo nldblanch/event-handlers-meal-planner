@@ -271,5 +271,64 @@ describe("/api/lists/:list_id", () => {
         });
     });
   });
+  describe("PATCH", () => {
+    it("200: responds with the updates list when changing the name", () => {
+      return request(app)
+        .patch("/api/lists/1")
+        .send({ list_name: "Houseshare groceries" })
+        .expect(200)
+        .then(({ body: { list } }) => {
+          expect(list.list_name).toBe("Houseshare groceries");
+          expect(list.list_id).toBe("1");
+        });
+    });
+    it("200: responds with the updates when only changing isPrivate Property", () => {
+      return request(app)
+        .patch("/api/lists/0")
+        .send({ isPrivate: true })
+        .expect(200)
+        .then(({ body: { list } }) => {
+          expect(list.isPrivate).toBe(true);
+          expect(list.list_id).toBe("0");
+        });
+    });
+    it("200: responds withthe updated fields when both name and isPrivate properties are updated", () => {
+      return request(app)
+        .patch("/api/lists/0")
+        .send({ isPrivate: true, list_name: "my private list" })
+        .expect(200)
+        .then(({ body: { list } }) => {
+          expect(list.list_name).toBe("my private list");
+          expect(list.isPrivate).toBe(true);
+          expect(list.list_id).toBe("0");
+        });
+    });
+    it("404: responds with an error when list_id does not exist", () => {
+      return request(app)
+        .patch("/api/lists/2024")
+        .send({ list_name: "2024 shopping" })
+        .expect(404)
+        .then(({ body: { message } }) => {
+          expect(message).toBe("List not found");
+        });
+    });
+    it.only("400: responds with err when data type in patch info is incorrect", () => {
+      return request(app)
+        .patch("/api/lists/0")
+        .send({ isPrivate: "hello" })
+        .expect(400)
+        .then(({ body: { message } }) => {
+          expect(message).toBe("Incorrect data type for isPrivate");
+        });
+    });
+    it("400: responds with err when patchinfo is in the incorrect format", () => {
+      return request(app)
+        .patch("/api/lists/0")
+        .send({ name: "hello" })
+        .expect(400)
+        .then(({ body: { message } }) => {
+          expect(message).toBe("Incorrect format for request body");
+        });
+    });
+  });
 });
-
