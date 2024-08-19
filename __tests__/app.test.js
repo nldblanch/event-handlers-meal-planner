@@ -93,8 +93,6 @@ describe("/users/:username", () => {
         .get(`/api/users/${username}`)
         .expect(200)
         .then(({ body: { user } }) => {
-          console.log(user);
-
           const { first_name, last_name, lists, password, recipes } = user;
           expect(user.username).toBe(username);
           expect(typeof first_name).toBe("string");
@@ -115,3 +113,75 @@ describe("/users/:username", () => {
     });
   });
 });
+
+
+describe("/users", () => {
+  describe("POST", () => {
+    it("201: responds with the created user", () => {
+      const body = {
+        username: "nldblanch",
+        first_name: "Nathan",
+        last_name: "Blanch",
+        email: "saxewil683@iteradev.com",
+        password: "testPassword",
+      }
+      return request(app)
+      .post(`/api/users`)
+      .send(body)
+      .expect(201)
+      .then(({body: {user}}) => {
+        expect(user).toMatchObject(body)
+        const {lists, recipes} = user
+        expect(lists).toEqual([])
+        expect(recipes).toEqual([])
+      })
+    })
+    it("400: responds with bad request when incorrect keys given", () => {
+      const body = {
+        name: "nldblanch",
+        first_name: "Nathan",
+        last_name: "Blanch",
+        email: "saxewil683@iteradev.com",
+        password: "testPassword",
+      }
+      return request(app)
+      .post(`/api/users`)
+      .send(body)
+      .expect(400)
+      .then(({body: {message}}) => {
+       expect(message).toBe("Bad request - invalid key on object.")
+      })
+    })
+    it("400: responds with bad request required keys are missing", () => {
+      const body = {
+        first_name: "Nathan",
+        last_name: "Blanch",
+        email: "saxewil683@iteradev.com",
+        password: "testPassword",
+      }
+      return request(app)
+      .post(`/api/users`)
+      .send(body)
+      .expect(400)
+      .then(({body: {message}}) => {
+       expect(message).toBe("Bad request - key missing on object.")
+      })
+    })
+    it("400: responds with bad request when user already exists", () => {
+      const body = {
+        username: "biscuitsabloom",
+        first_name: "Nathan",
+        last_name: "Blanch",
+        email: "saxewil683@iteradev.com",
+        password: "testPassword",
+      }
+      return request(app)
+      .post(`/api/users`)
+      .send(body)
+      .expect(400)
+      .then(({body: {message}}) => {
+       expect(message).toBe("Bad request - username already taken.")
+      })
+    })
+  })
+})
