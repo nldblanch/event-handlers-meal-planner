@@ -68,5 +68,19 @@
       "list": [{ "amount": 4, "item_name": "Coke - Diet, 355 Ml" }],
       "list_id": "1"
     }
+  },
+  "GET /api/recipes/:recipe_id": {
+    "description": "gets the recipe corresponding to the given id",
+    "queries": [],
+    "exampleResponse": {
+      "recipe": {
+        "recipe_id": 0,
+        "cook_time": 102,
+        "ingredients": "Proin interdum mauris non ligula pellentesque ultrices.",
+        "instructions": "Aenean lectus. Pellentesque eget nunc.",
+        "prep_time": 92,
+        "recipe_name": "Rev"
+      }
+    }
   }
 }
