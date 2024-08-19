@@ -271,7 +271,7 @@ describe("/api/lists/:list_id", () => {
         });
     });
   });
-  describe("PATCH", () => {
+  describe.only("PATCH", () => {
     it("200: responds with the updates list when changing the name", () => {
       return request(app)
         .patch("/api/lists/1")
@@ -312,7 +312,7 @@ describe("/api/lists/:list_id", () => {
           expect(message).toBe("List not found");
         });
     });
-    it.only("400: responds with err when data type in patch info is incorrect", () => {
+    it("400: responds with err when data type in patch info is incorrect", () => {
       return request(app)
         .patch("/api/lists/0")
         .send({ isPrivate: "hello" })
