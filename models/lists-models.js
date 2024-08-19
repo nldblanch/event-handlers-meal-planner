@@ -24,6 +24,7 @@ exports.fetchListsByUsername = (username) => {
           isPrivate: list.data().isPrivate,
         };
       });
+      console.log(listIdAndName);
       return listIdAndName;
     });
 };
