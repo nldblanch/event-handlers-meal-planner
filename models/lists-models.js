@@ -1,4 +1,10 @@
-const { collection, getDoc, doc, updateDoc } = require("firebase/firestore");
+const {
+  collection,
+  getDoc,
+  doc,
+  updateDoc,
+  addDoc,
+} = require("firebase/firestore");
 const db = require("../db/connection");
 
 const listRef = collection(db, "lists");
@@ -85,4 +91,21 @@ exports.updateList = (list_id, list_name, isPrivate) => {
     status: 400,
     message: "Incorrect format for request body",
   });
+};
+
+exports.addList = (list_name, isPrivate) => {
+  if (typeof list_name !== "string" || typeof isPrivate !== "boolean") {
+    return Promise.reject({ status: 400, message: "Invalid data type" });
+  }
+  return addDoc(listRef, { list_name, isPrivate, list: [] }).then(
+    (createdList) => {
+      const listInfo = {
+        list_name,
+        isPrivate,
+        list_id: createdList.id,
+        list: [],
+      };
+      return listInfo;
+    }
+  );
 };
