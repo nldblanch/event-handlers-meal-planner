@@ -174,3 +174,92 @@ describe("/api/recipes/:recipe_id", () => {
     });
   });
 });
+
+describe("/api/users/:username/lists", () => {
+  describe("POST", () => {
+    it("201: responds with the user with the given list added", () => {
+      const body = { list_id: 1 };
+      const testUser = {
+        username: "teawalrusstorm",
+        first_name: "Mariel",
+        last_name: "Renard",
+        email: "mrenard0@auda.org.au",
+        password: "hS0$CU}P",
+        lists: [0],
+        recipes: [],
+      };
+      return request(app)
+        .post(`/api/users/${testUser.username}/lists`)
+        .send(body)
+        .expect(201)
+        .then(({ body: { user } }) => {
+          expect(user).toMatchObject({
+            username: "teawalrusstorm",
+            first_name: "Mariel",
+            last_name: "Renard",
+            email: "mrenard0@auda.org.au",
+            password: "hS0$CU}P",
+            lists: [0, 1],
+            recipes: [],
+          });
+        });
+    });
+    it("400: responds bad request when list_id key not given", () => {
+      const body = { other_key: 1 };
+      const testUser = {
+        username: "teawalrusstorm",
+        first_name: "Mariel",
+        last_name: "Renard",
+        email: "mrenard0@auda.org.au",
+        password: "hS0$CU}P",
+        lists: [0],
+        recipes: [],
+      };
+      return request(app)
+        .post(`/api/users/${testUser.username}/lists`)
+        .send(body)
+        .expect(400)
+        .then(({ body: { message } }) => {
+          expect(message).toBe("Bad request - invalid key on object.");
+        });
+    });
+    it("400: responds bad request when user already has list in profile", () => {
+      const body = { list_id: 1 };
+      const testUser = {
+        username: "cityofgodshark",
+        first_name: "Tessy",
+        last_name: "Teresi",
+        email: "tteresi2@mtv.com",
+        password: "uE9!gpj@C",
+        lists: [1],
+        recipes: [0, 1],
+      };
+      return request(app)
+        .post(`/api/users/${testUser.username}/lists`)
+        .send(body)
+        .expect(400)
+        .then(({ body: { message } }) => {
+          expect(message).toBe("Bad request - list already assigned to user.");
+        });
+    });
+    it("400: responds bad request when invalid data type given for list", () => {
+      const body = { list_id: "hello" };
+      const testUser = {
+        username: "cityofgodshark",
+        first_name: "Tessy",
+        last_name: "Teresi",
+        email: "tteresi2@mtv.com",
+        password: "uE9!gpj@C",
+        lists: [1],
+        recipes: [0, 1],
+      };
+      return request(app)
+        .post(`/api/users/${testUser.username}/lists`)
+        .send(body)
+        .expect(400)
+        .then(({ body: { message } }) => {
+          expect(message).toBe("Bad request - invalid data type.");
+        });
+    });
+  });
+});

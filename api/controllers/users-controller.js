@@ -1,7 +1,8 @@
 const {
   fetchUserByUsername,
   addUserToDatabase,
-  fetchRecipesByUsername
+  fetchRecipesByUsername,
+  addListToUser,
 } = require("../models/users-model");
 
 exports.getUserByUsername = (request, response, next) => {
@@ -16,11 +17,11 @@ exports.getUserByUsername = (request, response, next) => {
 exports.getRecipesByUsername = (request, response, next) => {
   const { username } = request.params;
   fetchRecipesByUsername(username)
-    .then((recipes) => {      
+    .then((recipes) => {
       response.status(200).send({ recipes });
     })
     .catch(next);
-}
+};
 
 exports.postNewUser = (request, response, next) => {
   const user = request.body;
@@ -31,3 +32,12 @@ exports.postNewUser = (request, response, next) => {
     .catch(next);
 };
 
+exports.postListToUser = (request, response, next) => {
+  const { username } = request.params;
+  const { list_id } = request.body;
+  addListToUser(username, list_id)
+    .then((user) => {
+      response.status(201).send({ user });
+    })
+    .catch(next);
+};
