@@ -194,7 +194,7 @@ describe("/api/users/:username/recipes", () => {
         .expect(200)
         .then(({ body: { recipes } }) => {
           expect(Array.isArray(recipes)).toBe(true);
-          recipes.forEach((recipe) => {            
+          recipes.forEach((recipe) => {
             expect(recipe).toMatchObject({
               cook_time: expect.any(Number),
               ingredients: expect.any(String),
@@ -222,6 +222,33 @@ describe("/api/users/:username/recipes", () => {
         .then(({ body: { message } }) => {
           expect(message).toBe("User not found.");
         });
-    })
+    });
+  });
+});
+
+describe("/api/lists/:list_id", () => {
+  describe("GET", () => {
+    it("200: responds with all the list data for the corresponding list id", () => {
+      return request(app)
+        .get("/api/lists/1")
+        .expect(200)
+        .then(({ body: { list } }) => {
+          expect(list.list_id).toBe("1");
+          expect(list.list_name).toBe("my groceries");
+          expect(list.items.length).toBeGreaterThan(0);
+          list.items.forEach((item) => {
+            expect(typeof item.item_name).toBe("string");
+            expect(typeof item.amount).toBe("number");
+          });
+        });
+    });
+    it("404: responds with an error if the list_id does not exist", () => {
+      return request(app)
+        .get("/api/lists/2000")
+        .expect(404)
+        .then(({ body: { message } }) => {
+          expect(message).toBe("List not found");
+        });
+    });
   });
 });

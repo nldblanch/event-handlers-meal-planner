@@ -24,7 +24,27 @@ exports.fetchListsByUsername = (username) => {
           isPrivate: list.data().isPrivate,
         };
       });
-      console.log(listIdAndName);
+
       return listIdAndName;
     });
+};
+
+exports.fetchListById = (list_id) => {
+  const docRef = doc(listRef, list_id);
+  return getDoc(docRef).then((list) => {
+    if (!list.exists()) {
+      return Promise.reject({ status: 404, message: "List not found" });
+    }
+    const listInfo = list.data();
+    listInfo.list_id = list_id;
+    listItems = listInfo.list.map((item) => {
+      const copy = { ...item };
+      copy.amount = Number(copy.amount);
+      return copy;
+    });
+    delete listInfo[list];
+    listInfo.items = listItems;
+
+    return listInfo;
+  });
 };

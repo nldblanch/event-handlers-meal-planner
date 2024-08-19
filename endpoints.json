@@ -36,7 +36,7 @@
       }
     }
   },
-  "GET /api/lists/:username": {
+  "GET /api/users/:username/lists": {
     "description": "get all the lists associated with a user",
     "queries": [],
     "exampleResponse": [
@@ -56,6 +56,16 @@
           "recipe_name": "Rev"
         }
       ]
+    }
+  },
+  "GET /api/lists/:list_id": {
+    "description": "gets all the list info for the corresponding list_id",
+    "queries": [],
+    "exampleResponse": {
+      "isPrivate": true,
+      "list_name": "my groceries",
+      "list": [{ "amount": 4, "item_name": "Coke - Diet, 355 Ml" }],
+      "list_id": "1"
     }
   }
 }
