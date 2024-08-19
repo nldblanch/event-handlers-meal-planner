@@ -43,6 +43,38 @@
       { "list_id": 0, "list_name": "my shopping list", "isPrivate": false }
     ]
   },
+  "POST /api/users/:username/lists": {
+    "description": "allows client to post a list to a user",
+    "queries": [],
+    "format": { "list_id": 1 },
+    "exampleResponse": {
+      "user": {
+        "username": "biscuitsabloom",
+        "first_name": "Arty",
+        "last_name": "Kramer",
+        "email": "akramer5@illinois.edu",
+        "password": "xJ2?RX)M",
+        "lists": [1],
+        "recipes": ["Mr"]
+      }
+    }
+  },
+  "DELETE /api/users/:username/lists": {
+    "description": "allows client to delete a list from a user",
+    "queries": [],
+    "format": { "list_id": 1 },
+    "exampleResponse": {
+      "user": {
+        "username": "biscuitsabloom",
+        "first_name": "Arty",
+        "last_name": "Kramer",
+        "email": "akramer5@illinois.edu",
+        "password": "xJ2?RX)M",
+        "lists": [],
+        "recipes": ["Mr"]
+      }
+    }
+  },
   "GET /api/users/:username/recipes": {
     "description": "get all recipes associated with a user",
     "queries": [],
@@ -85,7 +117,18 @@
   },
   "PATCH /api/recipes/:recipe_id": {
     "description": "allows client to edit info on given recipe and reponds with updated recipe",
-    "queries": [],
+    "queries": [
+      {
+        "allowed_keys": [
+          "cook_time",
+          "ingredients",
+          "instructions",
+          "prep_time",
+          "recipe_name"
+        ]
+      }
+    ],
+    "format": { "patchInfo": { "cook_time": 60 } },
     "exampleResponse": {
       "recipe": {
         "recipe_id": 0,

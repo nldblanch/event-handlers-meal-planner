@@ -4,6 +4,7 @@ const {
   postNewUser,
   getRecipesByUsername,
   postListToUser,
+  deleteListFromUser
 } = require("../controllers/users-controller");
 
 const usersRouter = require("express").Router();
@@ -12,7 +13,8 @@ usersRouter.route("/:username").get(getUserByUsername);
 usersRouter
   .route("/:username/lists")
   .get(getListsByUsername)
-  .post(postListToUser);
+  .post(postListToUser)
+  .delete(deleteListFromUser);
 usersRouter.route("/:username/recipes").get(getRecipesByUsername);
 
 module.exports = usersRouter;

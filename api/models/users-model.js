@@ -91,7 +91,7 @@ exports.checkUsernameExists = (username) => {
   });
 };
 
-exports.addListToUser = (username, list_id) => {  
+exports.addListToUser = (username, list_id) => {
   if (!list_id) {
     return Promise.reject({
       status: 400,
@@ -123,4 +123,43 @@ exports.addListToUser = (username, list_id) => {
     .then(([user]) => {
       return user;
     });
+};
+
+exports.removeListfromUser = (username, list_id) => {
+  if (!list_id) {
+    return Promise.reject({
+      status: 400,
+      message: "Bad request - invalid key on object.",
+    });
+  }
+  if (typeof list_id !== "number") {
+    return Promise.reject({
+      status: 400,
+      message: "Bad request - invalid data type.",
+    });
+  }
+  
+  const userRef = collection(db, "users");
+  
+  return this.fetchUserByUsername(username)
+  .then((user) => {
+    if (!user.lists.includes(list_id)) {
+      return Promise.reject({
+        status: 400,
+        message: "Bad request - list not assigned to user.",
+      });
+    }
+    const docRef = doc(userRef, username);
+    const { lists } = user;   
+    const newLists = lists.filter((element) => {
+      return element !== list_id
+    })    
+    return Promise.all([
+      { ...user, lists: newLists },
+      updateDoc(docRef, "lists", newLists),
+    ]);
+  })
+  .then(([user]) => {        
+    return user;
+  });
 };
