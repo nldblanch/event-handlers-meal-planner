@@ -332,3 +332,37 @@ describe("/api/lists/:list_id", () => {
     });
   });
 });
+
+describe("/api/lists", () => {
+  describe("POST", () => {
+    it("201: responds with the list that has just been posted", () => {
+      return request(app)
+        .post("/api/lists")
+        .send({ list_name: "To Do list", isPrivate: true })
+        .expect(201)
+        .then(({ body: { list } }) => {
+          expect(list.list_name).toBe("To Do list");
+          expect(list.isPrivate).toBe(true);
+          expect(typeof list.list_id).toBe("string");
+        });
+    });
+    it("400: responds with an error when the fields have an incorrect type", () => {
+      return request(app)
+        .post("/api/lists")
+        .send({ list_name: 245, isPrivate: false })
+        .expect(400)
+        .then(({ body: { message } }) => {
+          expect(message).toBe("Invalid data type");
+        });
+    });
+    it("400: responds with an error when the incorrect fields are provided", () => {
+      return request(app)
+        .post("/api/lists")
+        .send({ name: 245, private: false })
+        .expect(400)
+        .then(({ body: { message } }) => {
+          expect(message).toBe("Invalid data type");
+        });
+    });
+  });
+});
