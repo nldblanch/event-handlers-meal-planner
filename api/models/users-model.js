@@ -4,6 +4,7 @@ const {
   doc,
   setDoc,
   getDoc,
+  updateDoc,
 } = require("firebase/firestore");
 const db = require("../../db/connection");
 
@@ -88,4 +89,38 @@ exports.checkUsernameExists = (username) => {
     })[0];
     return user;
   });
+};
+
+exports.addListToUser = (username, list_id) => {
+  if (typeof list_id !== "number") {
+    return Promise.reject({
+      status: 400,
+      message: "Bad request - invalid data type.",
+    });
+  }
+  if (!list_id) {
+    return Promise.reject({
+      status: 400,
+      message: "Bad request - invalid key on object.",
+    });
+  }
+  const userRef = collection(db, "users");
+  return this.fetchUserByUsername(username)
+    .then((user) => {
+      if (user.lists.includes(list_id)) {
+        return Promise.reject({
+          status: 400,
+          message: "Bad request - list already assigned to user.",
+        });
+      }
+      const docRef = doc(userRef, username);
+      const newLists = [...user.lists, list_id];
+      return Promise.all([
+        { ...user, lists: newLists },
+        updateDoc(docRef, "lists", newLists),
+      ]);
+    })
+    .then(([user]) => {
+      return user;
+    });
 };
