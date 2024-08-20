@@ -198,6 +198,21 @@ describe("/api/recipes/:recipe_id", () => {
           expect(message).toBe("Recipe not found.")
         })
     })
+    it("204: removes the recipe from the user that created it", () => {
+      const id = 0
+      const username = "cityofgodshark"
+      return request(app)
+        .delete(`/api/recipes/${id}`)
+        .expect(204)
+        .then(() => {
+          return request(app)
+          .get(`/api/users/${username}`)
+        })
+        .then(({body: {user}}) => {
+          expect(user.recipes.includes(id)).toBe(false)
+          
+        })
+    })
     it("404: returns not found if id doesn't exist", () => {
       const id = 2000
       return request(app)
@@ -396,6 +411,7 @@ describe("api/users/:username/recipes", () => {
       .then(({body: {recipe}}) => {
         expect(recipe).toMatchObject(body)
         expect(typeof recipe.recipe_id).toBe("string")
+        expect(recipe.created_by).toBe(username)
       })
     })
     it("201: adds the recipe ID to the user who created it", () => {
