@@ -361,6 +361,24 @@ describe("/api/lists/:list_id", () => {
         });
     });
   });
+  describe("DELETE", () => {
+    it("204: responds with no content when an list has successfully been deleted", () => {
+      return request(app)
+        .delete("/api/lists/0")
+        .expect(204)
+        .then(({ body }) => {
+          expect(body).toEqual({});
+        });
+    });
+    it("404: responds with an error when the list id doesn't exist", () => {
+      return request(app)
+        .delete("/api/lists/2000")
+        .expect(404)
+        .then(({ body: { message } }) => {
+          expect(message).toBe("List not found");
+        });
+    });
+  });
 });
 
 describe("/api/lists", () => {

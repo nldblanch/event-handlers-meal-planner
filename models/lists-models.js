@@ -4,6 +4,7 @@ const {
   doc,
   updateDoc,
   addDoc,
+  deleteDoc,
 } = require("firebase/firestore");
 const db = require("../db/connection");
 
@@ -127,4 +128,15 @@ exports.addItem = (list_id, item_name, amount) => {
     .then(() => {
       return { item_name, amount };
     });
+};
+
+exports.removeList = (list_id) => {
+  const docRef = doc(listRef, list_id);
+  return getDoc(docRef).then((snapShot) => {
+    if (snapShot.exists()) {
+      return deleteDoc(docRef);
+    } else {
+      return Promise.reject({ status: 404, message: "List not found" });
+    }
+  });
 };
