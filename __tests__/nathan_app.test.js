@@ -342,3 +342,28 @@ describe("/api/users/:username/lists", () => {
     });
   });
 });
+
+// describe("/api/users/:username/favourites", () => {
+//   describe("POST", () => {
+//     it("201: responds with the user with the newly added favourite meal", () => {
+//       const body = { recipe_id: 1 };
+//       const testUser = {
+//         username: "teawalrusstorm",
+//         first_name: "Mariel",
+//         last_name: "Renard",
+//         email: "mrenard0@auda.org.au",
+//         password: "hS0$CU}P",
+//         lists: [0],
+//         recipes: [],
+//       };
+//       return request(app)
+//         .post(`/api/users/${testUser.username}/lists`)
+//         .send(body)
+//         .expect(201)
+//         .then(({ body: { user } }) => {
+//           const {favourites} = user
+//           expect(favourites).toEqual([body.recipe_id])
+//         })
+//     })
+//   })
+// })
