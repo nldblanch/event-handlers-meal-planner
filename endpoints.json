@@ -149,5 +149,21 @@
       "isPrivate": true,
       "list_name": "family shopping"
     }
+  },
+  "POST /api/lists": {
+    "description": "post a new list to the data base",
+    "format": { "isPrivate": true, "list_name": "family shopping" },
+    "queries": [],
+    "exampleResponse": {
+      "list_id": "h1jkdn45",
+      "isPrivate": true,
+      "list_name": "family shopping"
+    }
+  },
+  "POST /api/lists/:list_id": {
+    "description": "posts a new item to a list specified by the list_id parameter",
+    "format": { "item_name": "Chicken", "amount": 1 },
+    "queries": [],
+    "exampleResponse": { "item_name": "Chicken", "amount": 1 }
   }
 }

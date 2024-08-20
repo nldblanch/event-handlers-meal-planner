@@ -109,3 +109,22 @@ exports.addList = (list_name, isPrivate) => {
     }
   );
 };
+
+exports.addItem = (list_id, item_name, amount) => {
+  if (typeof item_name !== "string" || typeof amount !== "number") {
+    return Promise.reject({ status: 400, message: "Invalid data type" });
+  }
+  const docRef = doc(listRef, list_id);
+  return getDoc(docRef)
+    .then((listSnap) => {
+      if (!listSnap.exists()) {
+        return Promise.reject({ status: 404, message: "List not found" });
+      }
+      const currItems = listSnap.data().list;
+      currItems.push({ item_name, amount });
+      return updateDoc(docRef, { list: currItems });
+    })
+    .then(() => {
+      return { item_name, amount };
+    });
+};

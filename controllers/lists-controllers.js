@@ -4,6 +4,7 @@ const {
   fetchListById,
   updateList,
   addList,
+  addItem,
 } = require("../models/lists-models");
 
 exports.getListsByUsername = (request, resposne, next) => {
@@ -48,6 +49,18 @@ exports.postList = (request, response, next) => {
   addList(list_name, isPrivate)
     .then((list) => {
       response.status(201).send({ list });
+    })
+    .catch((err) => {
+      next(err);
+    });
+};
+
+exports.postItem = (request, response, next) => {
+  const { list_id } = request.params;
+  const { item_name, amount } = request.body;
+  addItem(list_id, item_name, amount)
+    .then((item) => {
+      response.status(201).send({ item });
     })
     .catch((err) => {
       next(err);
