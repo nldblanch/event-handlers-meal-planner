@@ -172,6 +172,16 @@ describe("/api/recipes/:recipe_id", () => {
           expect(message).toBe("Bad request - no key on object.");
         });
     });
+    it("404: returns not found when recipe id doesn't exist", () => {
+      const patchInfo = { cook_time: 15, recipe_name: "Scrambled eggs" };
+      return request(app)
+        .patch("/api/recipes/2000")
+        .send(patchInfo)
+        .expect(404)
+        .then(({ body: { message } }) => {
+          expect(message).toBe("Recipe not found.");
+        });
+    });
   });
 });
 
@@ -342,6 +352,101 @@ describe("/api/users/:username/lists", () => {
     });
   });
 });
+
+describe("api/users/:username/recipes", () => {
+  describe("POST", () => {
+    it("201: returns the newly created recipe", () => {
+      const body = {
+        cook_time: 15,
+        ingredients: "eggs",
+        instructions: "whisk the eggs",
+        prep_time: 10,
+        recipe_name: "scrambled eggs"
+      }
+      const username = "teawalrusstorm"
+      return request(app)
+      .post(`/api/users/${username}/recipes`)
+      .send(body)
+      .expect(201)
+      .then(({body: {recipe}}) => {
+        expect(recipe).toMatchObject(body)
+        expect(typeof recipe.recipe_id).toBe("string")
+      })
+    })
+    it("201: adds the recipe ID to the user who created it", () => {
+      const body = {
+        cook_time: 15,
+        ingredients: "eggs",
+        instructions: "whisk the eggs",
+        prep_time: 10,
+        recipe_name: "scrambled eggs"
+      }
+      const username = "teawalrusstorm"
+      return request(app)
+      .post(`/api/users/${username}/recipes`)
+      .send(body)
+      .expect(201)
+      .then(({body: {recipe}}) => {
+        return request(app)
+        .get(`/api/users/${username}`)
+        .expect(200)
+        .then(({body: {user}}) => {
+          expect(user.recipes.includes(recipe.recipe_id)).toBe(true)
+        })
+      })
+    })
+    it("400: refuses keys that are not greenlisted", () => {
+      const body = {
+        cook_time: 15,
+        ingredients: "eggs",
+        whatToDo: "whisk the eggs",
+        prep_time: 10,
+        recipe_name: "scrambled eggs"
+      }
+      const username = "teawalrusstorm"
+      return request(app)
+      .post(`/api/users/${username}/recipes`)
+      .send(body)
+      .expect(400)
+      .then(({body: {message}}) => {
+        expect(message).toBe("Bad request - invalid key on object.")
+      })
+    })
+    it("400: returns bad request when one key is missing", () => {
+      const body = {
+        cook_time: 15,
+        ingredients: "eggs",
+        instructions: "whisk the eggs",
+        prep_time: 10,
+      }
+      const username = "teawalrusstorm"
+      return request(app)
+      .post(`/api/users/${username}/recipes`)
+      .send(body)
+      .expect(400)
+      .then(({body: {message}}) => {
+        expect(message).toBe("Bad request - key missing on object.")
+      })
+    })
+    it("404: returns not found when username doesn't exist", () => {
+      const body = {
+        cook_time: 15,
+        ingredients: "eggs",
+        instructions: "whisk the eggs",
+        prep_time: 10,
+        recipe_name: "scrambled eggs"
+      }
+      const username = "dinosaur"
+      return request(app)
+      .post(`/api/users/${username}/recipes`)
+      .send(body)
+        .expect(404)
+        .then(({ body: { message } }) => {
+          expect(message).toBe("User not found.");
+        });
+    });
+  })
+})
 
 // describe("/api/users/:username/favourites", () => {
 //   describe("POST", () => {

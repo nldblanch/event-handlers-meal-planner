@@ -5,6 +5,7 @@ const {
   setDoc,
   getDoc,
   updateDoc,
+  addDoc,
 } = require("firebase/firestore");
 const db = require("../../db/connection");
 
@@ -138,28 +139,64 @@ exports.removeListfromUser = (username, list_id) => {
       message: "Bad request - invalid data type.",
     });
   }
-  
+
   const userRef = collection(db, "users");
-  
+
   return this.fetchUserByUsername(username)
-  .then((user) => {
-    if (!user.lists.includes(list_id)) {
+    .then((user) => {
+      if (!user.lists.includes(list_id)) {
+        return Promise.reject({
+          status: 400,
+          message: "Bad request - list not assigned to user.",
+        });
+      }
+      const docRef = doc(userRef, username);
+      const { lists } = user;
+      const newLists = lists.filter((element) => {
+        return element !== list_id;
+      });
+      return Promise.all([
+        { ...user, lists: newLists },
+        updateDoc(docRef, "lists", newLists),
+      ]);
+    })
+    .then(([user]) => {
+      return user;
+    });
+};
+
+exports.addRecipeToUser = (username, recipe) => {
+  const greenlist = ["cook_time", "ingredients", "instructions", "prep_time", "recipe_name"]
+  const keys = Object.keys(recipe);
+  for (let key of keys) {
+    if (!greenlist.includes(key)) {
       return Promise.reject({
         status: 400,
-        message: "Bad request - list not assigned to user.",
+        message: "Bad request - invalid key on object.",
       });
     }
-    const docRef = doc(userRef, username);
-    const { lists } = user;   
-    const newLists = lists.filter((element) => {
-      return element !== list_id
-    })    
-    return Promise.all([
-      { ...user, lists: newLists },
-      updateDoc(docRef, "lists", newLists),
-    ]);
-  })
-  .then(([user]) => {        
-    return user;
-  });
+  }
+  if (keys.length !== 5)
+    return Promise.reject({
+      status: 400,
+      message: "Bad request - key missing on object.",
+    });
+  const recipeRef = collection(db, "recipes");
+  return this.fetchUserByUsername(username)
+    .then((user) => {
+      return Promise.all([addDoc(recipeRef, recipe), user.recipes]);
+    })
+    .then(([result, userRecipes]) => {
+      const userRef = collection(db, "users");
+      const docRef = doc(userRef, username);
+
+      const newRecipes = [...userRecipes, result.id];
+
+      return Promise.all([
+        { recipe_id: result.id, ...recipe },
+        updateDoc(docRef, "recipes", newRecipes),
+      ]).then(([recipe]) => {
+        return recipe;
+      });
+    });
 };

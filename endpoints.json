@@ -40,7 +40,7 @@
     "description": "get all the lists associated with a user",
     "queries": [],
     "exampleResponse": [
-      { "list_id": 0, "list_name": "my shopping list", "isPrivate": false }
+      { "list_id": "0", "list_name": "my shopping list", "isPrivate": false }
     ]
   },
   "POST /api/users/:username/lists": {
@@ -81,7 +81,7 @@
     "exampleResponse": {
       "recipes": [
         {
-          "recipe_id": 0,
+          "recipe_id": "0",
           "cook_time": 102,
           "ingredients": "Proin interdum mauris non ligula pellentesque ultrices.",
           "instructions": "Aenean lectus. Pellentesque eget nunc.",
@@ -89,6 +89,27 @@
           "recipe_name": "Rev"
         }
       ]
+    }
+  },
+  "POST /api/users/:username/recipes": {
+    "description": "allows client to post a recipe to a user profile",
+    "queries": [],
+    "format": {
+      "cook_time": 15,
+      "ingredients": "eggs",
+      "instructions": "Whisk the eggs",
+      "prep_time": 10,
+      "recipe_name": "Scrambled eggs"
+    },
+    "exampleResponse": {
+      "recipe": {
+        "recipe_id": "12345",
+        "cook_time": 15,
+        "ingredients": "eggs",
+        "instructions": "Whisk the eggs",
+        "prep_time": 10,
+        "recipe_name": "Scrambled eggs"
+      }
     }
   },
   "GET /api/lists/:list_id": {
@@ -106,7 +127,7 @@
     "queries": [],
     "exampleResponse": {
       "recipe": {
-        "recipe_id": 0,
+        "recipe_id": "0",
         "cook_time": 102,
         "ingredients": "Proin interdum mauris non ligula pellentesque ultrices.",
         "instructions": "Aenean lectus. Pellentesque eget nunc.",
@@ -131,7 +152,7 @@
     "format": { "patchInfo": { "cook_time": 60 } },
     "exampleResponse": {
       "recipe": {
-        "recipe_id": 0,
+        "recipe_id": "0",
         "cook_time": 20,
         "ingredients": "Eggs",
         "instructions": "Whisk the eggs",
