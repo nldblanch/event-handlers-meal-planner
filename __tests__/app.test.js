@@ -331,6 +331,36 @@ describe("/api/lists/:list_id", () => {
         });
     });
   });
+  describe("POST", () => {
+    it("201: responds with the item object created", () => {
+      return request(app)
+        .post("/api/lists/1")
+        .send({ item_name: "tofu", amount: 1 })
+        .expect(201)
+        .then(({ body: { item } }) => {
+          expect(item.item_name).toBe("tofu");
+          expect(item.amount).toBe(1);
+        });
+    });
+    it("404: responds with an error when the list_id does not exist", () => {
+      return request(app)
+        .post("/api/lists/300")
+        .send({ item_name: "tofu", amount: 1 })
+        .expect(404)
+        .then(({ body: { message } }) => {
+          expect(message).toBe("List not found");
+        });
+    });
+    it("400: responds with an error when the data types of the inputs are not correct", () => {
+      return request(app)
+        .post("/api/lists/1")
+        .send({ item: "tofu", amount: "3" })
+        .expect(400)
+        .then(({ body: { message } }) => {
+          expect(message).toBe("Invalid data type");
+        });
+    });
+  });
 });
 
 describe("/api/lists", () => {
