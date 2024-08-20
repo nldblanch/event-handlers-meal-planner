@@ -161,6 +161,11 @@
       }
     }
   },
+  "DELETE /api/recipes/:recipe_id": {
+    "description": "deletes the recipe corresponding to the given id",
+    "queries": [],
+    "exampleResponse": {}
+  },
   "PATCH /api/lists/:list_id": {
     "description": "edit the list_name, isPrivate property or both",
     "format": { "isPrivate": true, "list_name": "family shopping" },

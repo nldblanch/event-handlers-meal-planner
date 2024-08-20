@@ -1,4 +1,4 @@
-const { collection, doc, getDoc, updateDoc } = require("firebase/firestore");
+const { collection, doc, getDoc, updateDoc, deleteDoc } = require("firebase/firestore");
 const db = require("../../db/connection");
 
 exports.fetchRecipeById = (id) => {
@@ -57,3 +57,17 @@ exports.updateRecipe = (id, patchInfo) => {
     });
   });
 };
+
+exports.removeRecipe = (id) => {
+  const colRef = collection(db, "recipes")
+  const docRef = doc(colRef, id)
+  return getDoc(docRef).then((snapshot) => {
+    if (snapshot.exists()) {
+      return deleteDoc(docRef);
+    } else {
+      return Promise.reject({ status: 404, message: "Recipe not found." });
+    }
+  });
+  
+}
+

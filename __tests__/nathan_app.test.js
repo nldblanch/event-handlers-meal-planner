@@ -183,6 +183,31 @@ describe("/api/recipes/:recipe_id", () => {
         });
     });
   });
+  describe("DELETE", () => {
+    it("204: deletes the associated recipe", () => {
+      const id = 0
+      return request(app)
+        .delete(`/api/recipes/${id}`)
+        .expect(204)
+        .then(() => {
+          return request(app)
+          .get(`/api/recipes/${id}`)
+        })
+        .then(({body: {status, message}}) => {
+          expect(status).toBe(404)
+          expect(message).toBe("Recipe not found.")
+        })
+    })
+    it("404: returns not found if id doesn't exist", () => {
+      const id = 2000
+      return request(app)
+        .delete(`/api/recipes/${id}`)
+        .expect(404)
+        .then(({body: {message}}) => {
+          expect(message).toBe('Recipe not found.')
+        })
+    })
+  })
 });
 
 describe("/api/users/:username/lists", () => {
