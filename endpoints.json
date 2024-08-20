@@ -86,7 +86,8 @@
           "ingredients": "Proin interdum mauris non ligula pellentesque ultrices.",
           "instructions": "Aenean lectus. Pellentesque eget nunc.",
           "prep_time": 92,
-          "recipe_name": "Rev"
+          "recipe_name": "Rev",
+          "created_by": "cityofgodshark"
         }
       ]
     }
@@ -132,7 +133,8 @@
         "ingredients": "Proin interdum mauris non ligula pellentesque ultrices.",
         "instructions": "Aenean lectus. Pellentesque eget nunc.",
         "prep_time": 92,
-        "recipe_name": "Rev"
+        "recipe_name": "Rev",
+        "created_by": "cityofgodshark"
       }
     }
   },
@@ -157,7 +159,8 @@
         "ingredients": "Eggs",
         "instructions": "Whisk the eggs",
         "prep_time": 15,
-        "recipe_name": "Scrambled eggs"
+        "recipe_name": "Scrambled eggs",
+        "created_by": "cityofgodshark"
       }
     }
   },

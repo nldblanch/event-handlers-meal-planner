@@ -184,7 +184,7 @@ exports.addRecipeToUser = (username, recipe) => {
   const recipeRef = collection(db, "recipes");
   return this.fetchUserByUsername(username)
     .then((user) => {
-      return Promise.all([addDoc(recipeRef, recipe), user.recipes]);
+      return Promise.all([addDoc(recipeRef, {...recipe, created_by: username}), user.recipes]);
     })
     .then(([result, userRecipes]) => {
       const userRef = collection(db, "users");
@@ -193,7 +193,7 @@ exports.addRecipeToUser = (username, recipe) => {
       const newRecipes = [...userRecipes, result.id];
 
       return Promise.all([
-        { recipe_id: result.id, ...recipe },
+        { recipe_id: result.id, ...recipe, created_by: username },
         updateDoc(docRef, "recipes", newRecipes),
       ]).then(([recipe]) => {
         return recipe;
