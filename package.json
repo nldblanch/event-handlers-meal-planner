@@ -4,9 +4,11 @@
   "description": "hello world!",
   "main": "index.js",
   "scripts": {
+    "seed": "node ./db/seeds/run-seed.js",
     "test": "jest",
     "prepare": "husky",
-    "start": "node ./api/listen.js"
+    "start": "node ./api/listen.js",
+    "seed-prod": "NODE_ENV=production npm run seed"
   },
   "keywords": [],
   "author": "",

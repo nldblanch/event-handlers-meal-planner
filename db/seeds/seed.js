@@ -6,7 +6,6 @@ const {
   setDoc,
 } = require("firebase/firestore");
 const db = require("../connection");
-const data = require("../data/test-data");
 
 const seed = ({ lists, recipes, users }) => {
   const listsRef = collection(db, "lists");
