@@ -4,6 +4,7 @@ const {
   postList,
   postItem,
   deleteList,
+  deleteItem,
 } = require("../../controllers/lists-controllers");
 
 const listsRouter = require("express").Router();
@@ -19,5 +20,7 @@ listsRouter.post("/", postList);
 listsRouter.post("/:list_id", postItem);
 
 listsRouter.delete("/:list_id", deleteList);
+
+listsRouter.delete("/:list_id/:item_index", deleteItem);
 
 module.exports = listsRouter;

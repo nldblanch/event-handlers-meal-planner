@@ -7,6 +7,7 @@ const {
   deleteDoc,
 } = require("firebase/firestore");
 const db = require("../db/connection");
+const { list } = require("firebase/storage");
 
 const listRef = collection(db, "lists");
 const usersRef = collection(db, "users");
@@ -138,5 +139,22 @@ exports.removeList = (list_id) => {
     } else {
       return Promise.reject({ status: 404, message: "List not found" });
     }
+  });
+};
+
+exports.removeItem = (list_id, item_index) => {
+  const docRef = doc(listRef, list_id);
+  return getDoc(docRef).then((snapshot) => {
+    if (!snapshot.exists()) {
+      return Promise.reject({ status: 404, message: "List not found" });
+    }
+    const currItems = snapshot.data().list;
+    if (currItems[item_index] === undefined) {
+      return Promise.reject({ status: 404, message: "Item not found" });
+    }
+    const removedItem = currItems.filter(
+      (item, index) => index !== Number(item_index)
+    );
+    return updateDoc(docRef, { list: removedItem });
   });
 };
