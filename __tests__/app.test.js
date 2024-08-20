@@ -414,3 +414,32 @@ describe("/api/lists", () => {
     });
   });
 });
+
+describe("/api/lists/:list_id/:item_index", () => {
+  describe("DELETE", () => {
+    it("204: responds with 204 upon successful deletion of an item", () => {
+      return request(app)
+        .delete("/api/lists/0/0")
+        .expect(204)
+        .then(({ body }) => {
+          expect(body).toEqual({});
+        });
+    });
+    it("404: responds with an error when the list_id does not exist", () => {
+      return request(app)
+        .delete("/api/lists/200/1")
+        .expect(404)
+        .then(({ body: { message } }) => {
+          expect(message).toBe("List not found");
+        });
+    });
+    it("404: responds with an error when the item index does not exist", () => {
+      return request(app)
+        .delete("/api/lists/0/200")
+        .expect(404)
+        .then(({ body: { message } }) => {
+          expect(message).toBe("Item not found");
+        });
+    });
+  });
+});

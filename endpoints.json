@@ -170,5 +170,10 @@
     "description": "deletes the entire list document specified by the list_id parameter",
     "queries": [],
     "exampleResponse": "n/a - only responds with a 204 status"
+  },
+  "DELETE /api/lists/:list_id/:item_index": {
+    "description": "deletes the item in the list specified by the list_id parameter. it deletes the item in the list at the index specified by the item_index parameter",
+    "queries": [{ "deleteAll": ["true", "false"] }],
+    "exampleResponse": "n/a - only responds with a 204 status"
   }
 }

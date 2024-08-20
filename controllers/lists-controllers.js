@@ -6,6 +6,7 @@ const {
   addList,
   addItem,
   removeList,
+  removeItem,
 } = require("../models/lists-models");
 
 exports.getListsByUsername = (request, resposne, next) => {
@@ -71,6 +72,17 @@ exports.postItem = (request, response, next) => {
 exports.deleteList = (request, response, next) => {
   const { list_id } = request.params;
   removeList(list_id)
+    .then(() => {
+      response.status(204).send({});
+    })
+    .catch((err) => {
+      next(err);
+    });
+};
+
+exports.deleteItem = (request, response, next) => {
+  const { list_id, item_index } = request.params;
+  removeItem(list_id, item_index)
     .then(() => {
       response.status(204).send({});
     })
