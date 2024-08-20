@@ -165,5 +165,10 @@
     "format": { "item_name": "Chicken", "amount": 1 },
     "queries": [],
     "exampleResponse": { "item_name": "Chicken", "amount": 1 }
+  },
+  "DELETE /api/lists/:list_id": {
+    "description": "deletes the entire list document specified by the list_id parameter",
+    "queries": [],
+    "exampleResponse": "n/a - only responds with a 204 status"
   }
 }
