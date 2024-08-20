@@ -8,6 +8,7 @@ const {
   addDoc,
 } = require("firebase/firestore");
 const db = require("../../db/connection");
+const { checkGreenlist } = require("../utils/greenlist");
 
 exports.fetchUserByUsername = (username) => {
   const colRef = collection(db, "users");
@@ -41,28 +42,23 @@ exports.fetchRecipesByUsername = (username) => {
 };
 
 exports.addUserToDatabase = (user) => {
-  const greenlist = [
-    "email",
-    "first_name",
-    "last_name",
-    "password",
-    "username",
-  ];
   const keys = Object.keys(user);
-  for (let key of keys) {
-    if (!greenlist.includes(key)) {
-      return Promise.reject({
-        status: 400,
-        message: "Bad request - invalid key on object.",
-      });
-    }
-  }
   if (keys.length !== 5)
     return Promise.reject({
       status: 400,
       message: "Bad request - key missing on object.",
     });
-  return this.checkUsernameExists(user.username)
+    const greenlist = [
+      "email",
+      "first_name",
+      "last_name",
+      "password",
+      "username",
+    ];
+    return checkGreenlist(greenlist, user)
+    .then(() => {
+      return this.checkUsernameExists(user.username)
+    })
     .then((username) => {
       if (username)
         return Promise.reject({
@@ -166,25 +162,30 @@ exports.removeListfromUser = (username, list_id) => {
 };
 
 exports.addRecipeToUser = (username, recipe) => {
-  const greenlist = ["cook_time", "ingredients", "instructions", "prep_time", "recipe_name"]
+  const recipeRef = collection(db, "recipes");
   const keys = Object.keys(recipe);
-  for (let key of keys) {
-    if (!greenlist.includes(key)) {
-      return Promise.reject({
-        status: 400,
-        message: "Bad request - invalid key on object.",
-      });
-    }
-  }
   if (keys.length !== 5)
     return Promise.reject({
       status: 400,
       message: "Bad request - key missing on object.",
     });
-  const recipeRef = collection(db, "recipes");
-  return this.fetchUserByUsername(username)
+  const greenlist = [
+    "cook_time",
+    "ingredients",
+    "instructions",
+    "prep_time",
+    "recipe_name",
+  ];
+  return checkGreenlist(greenlist, recipe)
+    .then(() => {
+      return this.fetchUserByUsername(username);
+    })
+
     .then((user) => {
-      return Promise.all([addDoc(recipeRef, {...recipe, created_by: username}), user.recipes]);
+      return Promise.all([
+        addDoc(recipeRef, { ...recipe, created_by: username }),
+        user.recipes,
+      ]);
     })
     .then(([result, userRecipes]) => {
       const userRef = collection(db, "users");
