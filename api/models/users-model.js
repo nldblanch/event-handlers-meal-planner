@@ -9,7 +9,6 @@ const {
 } = require("firebase/firestore");
 const db = require("../../db/connection");
 const { checkGreenlist } = require("../utils/greenlist");
-const { checkGreenlist } = require("../utils/greenlist");
 
 exports.fetchUserByUserId = (user_id) => {
   const colRef = collection(db, "users");
