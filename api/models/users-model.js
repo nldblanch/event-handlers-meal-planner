@@ -10,26 +10,31 @@ const {
 const db = require("../../db/connection");
 const { checkGreenlist } = require("../utils/greenlist");
 
-exports.fetchUserByUsername = (username) => {
+exports.fetchUserByUserId = (user_id) => {
   const colRef = collection(db, "users");
-
-  return getDoc(doc(colRef, username)).then((user) => {
-    if (!user.data())
+  
+  return getDoc(doc(colRef, user_id)).then((user) => {
+    if (!user.exists())
       return Promise.reject({ status: 404, message: "User not found." });
-    else return user.data();
+    else {
+      return {user_id, ...user.data()}
+    };
   });
 };
 
-exports.fetchRecipesByUsername = (username) => {
+exports.fetchRecipesByUserId = (user_id) => {
+  
   const usersRef = collection(db, "users");
   const recipesRef = collection(db, "recipes");
-  return getDoc(doc(usersRef, username)).then((user) => {
+  return getDoc(doc(usersRef, user_id)).then((user) => {
     if (!user.data()) {
       return Promise.reject({ status: 404, message: "User not found." });
     }
+    
     const recipes = user.data().recipes.map((recipeId) => {
       return getDoc(doc(recipesRef, String(recipeId)));
     });
+
     return Promise.all(recipes).then((recipesData) => {
       return recipesData.map((recipe) => {
         return {
@@ -52,43 +57,46 @@ exports.addUserToDatabase = (user) => {
       "email",
       "first_name",
       "last_name",
-      "password",
-      "username",
+      "avatarURL",
+      "displayName",
     ];
     return checkGreenlist(greenlist, user)
     .then(() => {
-      return this.checkUsernameExists(user.username)
-    })
-    .then((username) => {
-      if (username)
-        return Promise.reject({
-          status: 400,
-          message: "Bad request - username already taken.",
-        });
-
+      
+      // return this.checkEmailExists(user.email)
+      // .then((email) => {
+        //   if (email)
+        //     return Promise.reject({
+      //       status: 400,
+      //       message: "Bad request - email already exists.",
+      //     });
+      
       user.lists = [];
       user.recipes = [];
-
+      
       const usersRef = collection(db, "users");
-      const docRef = doc(usersRef, user.username);
-
-      return setDoc(docRef, user);
+      
+      return addDoc(usersRef, user);
     })
-    .then(() => {
-      return this.fetchUserByUsername(user.username);
+    // })
+    .then((user) => {
+      
+      
+      
+      return this.fetchUserByUserId(user.id);
     });
 };
-exports.checkUsernameExists = (username) => {
-  const colRef = collection(db, "users");
-  return getDocs(colRef).then((res) => {
-    const user = res.docs.filter((doc) => {
-      return doc.id === username;
-    })[0];
-    return user;
-  });
-};
+// exports.checkEmailExists = (email) => {
+//   const colRef = collection(db, "users");
+//   return getDocs(colRef).then((res) => {
+//     const user = res.docs.filter((doc) => {
+//       return doc.id === username;
+//     })[0];
+//     return user;
+//   });
+// };
 
-exports.addListToUser = (username, list_id) => {
+exports.addListToUser = (user_id, list_id) => {
   if (!list_id) {
     return Promise.reject({
       status: 400,
@@ -102,7 +110,7 @@ exports.addListToUser = (username, list_id) => {
     });
   }
   const userRef = collection(db, "users");
-  return this.fetchUserByUsername(username)
+  return this.fetchUserByUserId(user_id)
     .then((user) => {
       if (user.lists.includes(list_id)) {
         return Promise.reject({
@@ -110,7 +118,7 @@ exports.addListToUser = (username, list_id) => {
           message: "Bad request - list already assigned to user.",
         });
       }
-      const docRef = doc(userRef, username);
+      const docRef = doc(userRef, user_id);
       const newLists = [...user.lists, list_id];
       return Promise.all([
         { ...user, lists: newLists },
@@ -122,7 +130,7 @@ exports.addListToUser = (username, list_id) => {
     });
 };
 
-exports.removeListfromUser = (username, list_id) => {
+exports.removeListfromUser = (user_id, list_id) => {
   if (!list_id) {
     return Promise.reject({
       status: 400,
@@ -138,7 +146,7 @@ exports.removeListfromUser = (username, list_id) => {
 
   const userRef = collection(db, "users");
 
-  return this.fetchUserByUsername(username)
+  return this.fetchUserByUserId(user_id)
     .then((user) => {
       if (!user.lists.includes(list_id)) {
         return Promise.reject({
@@ -146,7 +154,7 @@ exports.removeListfromUser = (username, list_id) => {
           message: "Bad request - list not assigned to user.",
         });
       }
-      const docRef = doc(userRef, username);
+      const docRef = doc(userRef, user_id);
       const { lists } = user;
       const newLists = lists.filter((element) => {
         return element !== list_id;
@@ -161,7 +169,7 @@ exports.removeListfromUser = (username, list_id) => {
     });
 };
 
-exports.addRecipeToUser = (username, recipe) => {
+exports.addRecipeToUser = (user_id, recipe) => {
   const recipeRef = collection(db, "recipes");
   const keys = Object.keys(recipe);
   if (keys.length !== 5)
@@ -178,23 +186,23 @@ exports.addRecipeToUser = (username, recipe) => {
   ];
   return checkGreenlist(greenlist, recipe)
     .then(() => {
-      return this.fetchUserByUsername(username);
+      return this.fetchUserByUserId(user_id);
     })
 
     .then((user) => {
       return Promise.all([
-        addDoc(recipeRef, { ...recipe, created_by: username }),
+        addDoc(recipeRef, { ...recipe, created_by: user_id }),
         user.recipes,
       ]);
     })
     .then(([result, userRecipes]) => {
       const userRef = collection(db, "users");
-      const docRef = doc(userRef, username);
+      const docRef = doc(userRef, user_id);
 
       const newRecipes = [...userRecipes, result.id];
 
       return Promise.all([
-        { recipe_id: result.id, ...recipe, created_by: username },
+        { recipe_id: result.id, ...recipe, created_by: user_id },
         updateDoc(docRef, "recipes", newRecipes),
       ]).then(([recipe]) => {
         return recipe;

@@ -7,7 +7,7 @@ module.exports = [
       "Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.\n\nAenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.\n\nCurabitur in libero ut massa volutpat convallis. Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo. Maecenas pulvinar lobortis est.",
     prep_time: 92,
     cook_time: 102,
-    created_by: "cityofgodshark"
+    created_by: "2"
   },
   {
     recipe_name: "Honorable",
@@ -17,7 +17,7 @@ module.exports = [
       "Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.",
     prep_time: 22,
     cook_time: 261,
-    created_by: "cityofgodshark"
+    created_by: "2"
   },
   {
     recipe_name: "Dr",
@@ -27,7 +27,7 @@ module.exports = [
       "Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus.\n\nPellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.",
     prep_time: 68,
     cook_time: 209,
-    created_by: "thegraduateweb"
+    created_by: "4"
   },
   {
     recipe_name: "Mr",
@@ -37,6 +37,6 @@ module.exports = [
       "Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit.\n\nDonec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque.",
     prep_time: 137,
     cook_time: 180,
-    created_by: "biscuitsabloom"
+    created_by: "5"
   },
 ];
