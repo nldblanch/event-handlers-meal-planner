@@ -1,16 +1,16 @@
 {
-  "GET /api/users/:username": {
+  "GET /api/users/:user_id": {
     "description": "returns the data of a specific user",
     "queries": [],
     "exampleResponse": {
       "user": {
-        "username": "biscuitsabloom",
+        "user_id": "0",
         "first_name": "Arty",
         "last_name": "Kramer",
         "email": "akramer5@illinois.edu",
-        "password": "xJ2?RX)M",
+        "displayName": "Arty Kramer",
         "lists": [],
-        "recipes": ["Mr"]
+        "recipes": [0]
       }
     }
   },
@@ -18,64 +18,67 @@
     "description": "allows client to post user to database",
     "queries": [],
     "format": {
-      "username": "nldblanch",
+      "displayName": "Nathan Blanch",
       "first_name": "Nathan",
       "last_name": "Blanch",
       "email": "saxewil683@iteradev.com",
-      "password": "testPassword"
+      "avatarURL": "image.url"
     },
     "exampleResponse": {
       "user": {
-        "username": "nldblanch",
+        "user_id": "12345",
+        "displayName": "Nathan Blanch",
         "first_name": "Nathan",
         "last_name": "Blanch",
         "email": "saxewil683@iteradev.com",
-        "password": "testPassword",
+        "avatarURL": "image.url",
         "lists": [],
         "recipes": []
       }
     }
   },
-  "GET /api/users/:username/lists": {
+  "GET /api/users/:user_id/lists": {
     "description": "get all the lists associated with a user",
     "queries": [],
     "exampleResponse": [
       { "list_id": "0", "list_name": "my shopping list", "isPrivate": false }
     ]
   },
-  "POST /api/users/:username/lists": {
+  "POST /api/users/:user_id/lists": {
     "description": "allows client to post a list to a user",
     "queries": [],
     "format": { "list_id": 1 },
     "exampleResponse": {
       "user": {
-        "username": "biscuitsabloom",
-        "first_name": "Arty",
-        "last_name": "Kramer",
-        "email": "akramer5@illinois.edu",
-        "password": "xJ2?RX)M",
-        "lists": [1],
-        "recipes": ["Mr"]
+        "user_id": "12345",
+        "displayName": "Nathan Blanch",
+        "first_name": "Nathan",
+        "last_name": "Blanch",
+        "email": "saxewil683@iteradev.com",
+        "avatarURL": "image.url",
+        "lists": [],
+        "recipes": [1]
       }
     }
   },
-  "DELETE /api/users/:username/lists": {
+  "DELETE /api/users/:user_id/lists": {
     "description": "allows client to delete a list from a user",
     "queries": [],
     "format": { "list_id": 1 },
     "exampleResponse": {
       "user": {
-        "username": "biscuitsabloom",
-        "first_name": "Arty",
-        "last_name": "Kramer",
-        "email": "akramer5@illinois.edu",
-        "password": "xJ2?RX)M",
+        "user_id": "12345",
+        "displayName": "Nathan Blanch",
+        "first_name": "Nathan",
+        "last_name": "Blanch",
+        "email": "saxewil683@iteradev.com",
+        "avatarURL": "image.url",
         "lists": [],
-        "recipes": ["Mr"]
+        "recipes": []
       }
     }
   },
-  "GET /api/users/:username/recipes": {
+  "GET /api/users/:user_id/recipes": {
     "description": "get all recipes associated with a user",
     "queries": [],
     "exampleResponse": {
@@ -87,12 +90,12 @@
           "instructions": "Aenean lectus. Pellentesque eget nunc.",
           "prep_time": 92,
           "recipe_name": "Rev",
-          "created_by": "cityofgodshark"
+          "created_by": "0"
         }
       ]
     }
   },
-  "POST /api/users/:username/recipes": {
+  "POST /api/users/:user_id/recipes": {
     "description": "allows client to post a recipe to a user profile",
     "queries": [],
     "format": {
@@ -109,7 +112,8 @@
         "ingredients": "eggs",
         "instructions": "Whisk the eggs",
         "prep_time": 10,
-        "recipe_name": "Scrambled eggs"
+        "recipe_name": "Scrambled eggs",
+        "created_by": "0"
       }
     }
   },
