@@ -58,8 +58,8 @@ const dropUsers = (usersRef) => {
 };
 const insertUsers = (usersRef, users) => {
   const promiseArray = [];
-  users.forEach((user) => {
-    const docRef = doc(usersRef, user.username);
+  users.forEach((user, index) => {
+    const docRef = doc(usersRef, String(index));
     promiseArray.push(setDoc(docRef, user));
   });
   return promiseArray;

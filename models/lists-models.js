@@ -12,8 +12,8 @@ const { list } = require("firebase/storage");
 const listRef = collection(db, "lists");
 const usersRef = collection(db, "users");
 
-exports.fetchListsByUsername = (username) => {
-  return getDoc(doc(usersRef, username))
+exports.fetchListsByUserId = (user_id) => {
+  return getDoc(doc(usersRef, user_id))
     .then((user) => {
       if (!user.data()) {
         return Promise.reject({ status: 404, message: "User not found." });

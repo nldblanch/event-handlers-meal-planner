@@ -66,6 +66,7 @@ exports.removeRecipe = (id) => {
   const userRef = collection(db, "users");
   return getDoc(docRef)
     .then((snapshot) => {
+      
       if (!snapshot.exists()) {
         return Promise.reject({ status: 404, message: "Recipe not found." });
       } else {
@@ -73,11 +74,14 @@ exports.removeRecipe = (id) => {
       }
     })
     .then((user) => {
-      const { username, recipes } = user.data();
+      
+      const { recipes } = user.data();
+      const user_id = user.id
+      
       const newRecipes = recipes.filter((element) => {
         return element !== Number(id);
       });
-      return updateDoc(doc(userRef, username), "recipes", newRecipes);
+      return updateDoc(doc(userRef, user_id), "recipes", newRecipes);
     })
     .then(() => {
       return deleteDoc(docRef);

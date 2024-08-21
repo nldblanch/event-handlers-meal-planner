@@ -1,6 +1,6 @@
 const { request } = require("../api/app");
 const {
-  fetchListsByUsername,
+  fetchListsByUserId,
   fetchListById,
   updateList,
   addList,
@@ -9,9 +9,9 @@ const {
   removeItem,
 } = require("../models/lists-models");
 
-exports.getListsByUsername = (request, resposne, next) => {
-  const { username } = request.params;
-  fetchListsByUsername(username)
+exports.getListsByUserId = (request, resposne, next) => {
+  const { user_id } = request.params;
+  fetchListsByUserId(user_id)
     .then((lists) => {
       resposne.status(200).send({ lists });
     })

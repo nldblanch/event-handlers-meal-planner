@@ -1,24 +1,24 @@
 const {
-  fetchUserByUsername,
+  fetchUserByUserId,
   addUserToDatabase,
-  fetchRecipesByUsername,
   addListToUser,
   removeListfromUser,
-  addRecipeToUser
+  addRecipeToUser,
+  fetchRecipesByUserId
 } = require("../models/users-model");
 
-exports.getUserByUsername = (request, response, next) => {
-  const { username } = request.params;
-  fetchUserByUsername(username)
+exports.getUserByUserId = (request, response, next) => {
+  const { user_id } = request.params;
+  fetchUserByUserId(user_id)
     .then((user) => {
       response.status(200).send({ user });
     })
     .catch(next);
 };
 
-exports.getRecipesByUsername = (request, response, next) => {
-  const { username } = request.params;
-  fetchRecipesByUsername(username)
+exports.getRecipesByUserId = (request, response, next) => {
+  const { user_id } = request.params;
+  fetchRecipesByUserId(user_id)
     .then((recipes) => {
       response.status(200).send({ recipes });
     })
@@ -35,9 +35,9 @@ exports.postNewUser = (request, response, next) => {
 };
 
 exports.postListToUser = (request, response, next) => {
-  const { username } = request.params;
+  const { user_id } = request.params;
   const { list_id } = request.body;
-  addListToUser(username, list_id)
+  addListToUser(user_id, list_id)
     .then((user) => {
       response.status(201).send({ user });
     })
@@ -45,9 +45,9 @@ exports.postListToUser = (request, response, next) => {
 };
 
 exports.deleteListFromUser = (request, response, next) => {
-  const { username } = request.params;
+  const { user_id } = request.params;
   const { list_id } = request.body;
-  removeListfromUser(username, list_id)
+  removeListfromUser(user_id, list_id)
     .then((user) => {      
       response.status(200).send({ user });
     })
@@ -55,9 +55,9 @@ exports.deleteListFromUser = (request, response, next) => {
 };
 
 exports.postRecipeToUser = (request, response, next) => {
-  const { username } = request.params;
+  const { user_id } = request.params;
   const recipe = request.body;
-  addRecipeToUser(username, recipe)
+  addRecipeToUser(user_id, recipe)
   .then((recipe) => {      
     response.status(201).send({ recipe });
   })

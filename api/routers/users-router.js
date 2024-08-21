@@ -1,22 +1,22 @@
-const { getListsByUsername } = require("../../controllers/lists-controllers");
+const { getListsByUserId } = require("../../controllers/lists-controllers");
 const {
-  getUserByUsername,
+  getUserByUserId,
   postNewUser,
-  getRecipesByUsername,
   postListToUser,
   deleteListFromUser,
-  postRecipeToUser
+  postRecipeToUser,
+  getRecipesByUserId
 } = require("../controllers/users-controller");
 
 const usersRouter = require("express").Router();
 usersRouter.route("/").post(postNewUser);
-usersRouter.route("/:username").get(getUserByUsername);
+usersRouter.route("/:user_id").get(getUserByUserId);
 usersRouter
-  .route("/:username/lists")
-  .get(getListsByUsername)
+  .route("/:user_id/lists")
+  .get(getListsByUserId)
   .post(postListToUser)
   .delete(deleteListFromUser);
-usersRouter.route("/:username/recipes").get(getRecipesByUsername).post(postRecipeToUser);
+usersRouter.route("/:user_id/recipes").get(getRecipesByUserId).post(postRecipeToUser);
 
 
 module.exports = usersRouter;

@@ -1,5 +1,5 @@
 const request = require("supertest");
-const data = require("../db/data/test-data");
+const data = require("../db/data/test-data/index.js");
 const { seed } = require("../db/seeds/seed.js");
 const db = require("../db/connection.js");
 const { terminate } = require("firebase/firestore");
@@ -28,6 +28,7 @@ describe("/api/recipes/:recipe_id", () => {
             instructions,
             prep_time,
             recipe_name,
+            created_by
           } = recipe;
           expect(recipe_id).toBe("0");
           expect(cook_time).toBe(102);
@@ -35,6 +36,7 @@ describe("/api/recipes/:recipe_id", () => {
           expect(typeof instructions).toBe("string");
           expect(prep_time).toBe(92);
           expect(recipe_name).toBe("Rev");
+          expect(typeof created_by).toBe("string")
         });
     });
     it("404: returns not found when recipe id doesn't exist", () => {
@@ -62,6 +64,7 @@ describe("/api/recipes/:recipe_id", () => {
             instructions,
             prep_time,
             recipe_name,
+            created_by
           } = recipe;
           expect(recipe_id).toBe("0");
           expect(typeof cook_time).toBe("number");
@@ -69,6 +72,7 @@ describe("/api/recipes/:recipe_id", () => {
           expect(typeof instructions).toBe("string");
           expect(typeof prep_time).toBe("number");
           expect(typeof recipe_name).toBe("string");
+          expect(typeof created_by).toBe("string")
         });
     });
     it("200: patch cook_time", () => {
@@ -199,14 +203,14 @@ describe("/api/recipes/:recipe_id", () => {
         })
     })
     it("204: removes the recipe from the user that created it", () => {
-      const id = 0
-      const username = "cityofgodshark"
+      const id = 2
+      const user_id = "4"
       return request(app)
         .delete(`/api/recipes/${id}`)
         .expect(204)
         .then(() => {
           return request(app)
-          .get(`/api/users/${username}`)
+          .get(`/api/users/${user_id}`)
         })
         .then(({body: {user}}) => {
           expect(user.recipes.includes(id)).toBe(false)
@@ -225,48 +229,33 @@ describe("/api/recipes/:recipe_id", () => {
   })
 });
 
-describe("/api/users/:username/lists", () => {
+describe("/api/users/:user_id/lists", () => {
   describe("POST", () => {
     it("201: responds with the user with the given list added", () => {
-      const body = { list_id: 1 };
+      const body = { list_id: 2 };
       const testUser = {
-        username: "teawalrusstorm",
-        first_name: "Mariel",
-        last_name: "Renard",
-        email: "mrenard0@auda.org.au",
-        password: "hS0$CU}P",
-        lists: [0],
-        recipes: [],
-      };
+        user_id: "2",
+        lists: [1],
+      }
       return request(app)
-        .post(`/api/users/${testUser.username}/lists`)
+        .post(`/api/users/${testUser.user_id}/lists`)
         .send(body)
         .expect(201)
         .then(({ body: { user } }) => {
           expect(user).toMatchObject({
-            username: "teawalrusstorm",
-            first_name: "Mariel",
-            last_name: "Renard",
-            email: "mrenard0@auda.org.au",
-            password: "hS0$CU}P",
-            lists: [0, 1],
-            recipes: [],
+            user_id: "2",
+            lists: [1, 2],
           });
         });
     });
     it("400: responds bad request when list_id key not given", () => {
       const body = { other_key: 1 };
       const testUser = {
-        username: "teawalrusstorm",
-        first_name: "Mariel",
-        last_name: "Renard",
-        email: "mrenard0@auda.org.au",
-        password: "hS0$CU}P",
-        lists: [0],
-        recipes: [],
-      };
+        user_id: "2",
+        lists: [1],
+      }
       return request(app)
-        .post(`/api/users/${testUser.username}/lists`)
+        .post(`/api/users/${testUser.user_id}/lists`)
         .send(body)
         .expect(400)
         .then(({ body: { message } }) => {
@@ -276,16 +265,11 @@ describe("/api/users/:username/lists", () => {
     it("400: responds bad request when user already has list in profile", () => {
       const body = { list_id: 1 };
       const testUser = {
-        username: "cityofgodshark",
-        first_name: "Tessy",
-        last_name: "Teresi",
-        email: "tteresi2@mtv.com",
-        password: "uE9!gpj@C",
+        user_id: "2",
         lists: [1],
-        recipes: [0, 1],
-      };
+      }
       return request(app)
-        .post(`/api/users/${testUser.username}/lists`)
+        .post(`/api/users/${testUser.user_id}/lists`)
         .send(body)
         .expect(400)
         .then(({ body: { message } }) => {
@@ -295,16 +279,11 @@ describe("/api/users/:username/lists", () => {
     it("400: responds bad request when invalid data type given for list", () => {
       const body = { list_id: "hello" };
       const testUser = {
-        username: "cityofgodshark",
-        first_name: "Tessy",
-        last_name: "Teresi",
-        email: "tteresi2@mtv.com",
-        password: "uE9!gpj@C",
+        user_id: "2",
         lists: [1],
-        recipes: [0, 1],
-      };
+      }
       return request(app)
-        .post(`/api/users/${testUser.username}/lists`)
+        .post(`/api/users/${testUser.user_id}/lists`)
         .send(body)
         .expect(400)
         .then(({ body: { message } }) => {
@@ -316,16 +295,11 @@ describe("/api/users/:username/lists", () => {
     it("200: removes the associated user from the list", () => {
       const body = { list_id: 1 };
       const testUser = {
-        username: "cityofgodshark",
-        first_name: "Tessy",
-        last_name: "Teresi",
-        email: "tteresi2@mtv.com",
-        password: "uE9!gpj@C",
+        user_id: "2",
         lists: [1],
-        recipes: [0, 1],
-      };
+      }
       return request(app)
-        .delete(`/api/users/${testUser.username}/lists`)
+        .delete(`/api/users/${testUser.user_id}/lists`)
         .send(body)
         .expect(200)
         .then(({ body: { user } }) => {
@@ -336,16 +310,11 @@ describe("/api/users/:username/lists", () => {
     it("400: responds bad request when list_id key not given", () => {
       const body = { other_key: 1 };
       const testUser = {
-        username: "teawalrusstorm",
-        first_name: "Mariel",
-        last_name: "Renard",
-        email: "mrenard0@auda.org.au",
-        password: "hS0$CU}P",
-        lists: [0],
-        recipes: [],
-      };
+        user_id: "2",
+        lists: [1],
+      }
       return request(app)
-        .delete(`/api/users/${testUser.username}/lists`)
+        .delete(`/api/users/${testUser.user_id}/lists`)
         .send(body)
         .expect(400)
         .then(({ body: { message } }) => {
@@ -355,16 +324,11 @@ describe("/api/users/:username/lists", () => {
     it("400: responds bad request when doesn't have list in profile", () => {
       const body = { list_id: 2 };
       const testUser = {
-        username: "cityofgodshark",
-        first_name: "Tessy",
-        last_name: "Teresi",
-        email: "tteresi2@mtv.com",
-        password: "uE9!gpj@C",
+        user_id: "2",
         lists: [1],
-        recipes: [0, 1],
-      };
+      }
       return request(app)
-        .delete(`/api/users/${testUser.username}/lists`)
+        .delete(`/api/users/${testUser.user_id}/lists`)
         .send(body)
         .expect(400)
         .then(({ body: { message } }) => {
@@ -374,16 +338,11 @@ describe("/api/users/:username/lists", () => {
     it("400: responds bad request when invalid data type given for list", () => {
       const body = { list_id: "hello" };
       const testUser = {
-        username: "cityofgodshark",
-        first_name: "Tessy",
-        last_name: "Teresi",
-        email: "tteresi2@mtv.com",
-        password: "uE9!gpj@C",
+        user_id: "2",
         lists: [1],
-        recipes: [0, 1],
-      };
+      }
       return request(app)
-        .delete(`/api/users/${testUser.username}/lists`)
+        .delete(`/api/users/${testUser.user_id}/lists`)
         .send(body)
         .expect(400)
         .then(({ body: { message } }) => {
@@ -393,7 +352,7 @@ describe("/api/users/:username/lists", () => {
   });
 });
 
-describe("api/users/:username/recipes", () => {
+describe("api/users/:user_id/recipes", () => {
   describe("POST", () => {
     it("201: returns the newly created recipe", () => {
       const body = {
@@ -403,15 +362,15 @@ describe("api/users/:username/recipes", () => {
         prep_time: 10,
         recipe_name: "scrambled eggs"
       }
-      const username = "teawalrusstorm"
+      const user_id = "0"
       return request(app)
-      .post(`/api/users/${username}/recipes`)
+      .post(`/api/users/${user_id}/recipes`)
       .send(body)
       .expect(201)
       .then(({body: {recipe}}) => {
         expect(recipe).toMatchObject(body)
         expect(typeof recipe.recipe_id).toBe("string")
-        expect(recipe.created_by).toBe(username)
+        expect(recipe.created_by).toBe(user_id)
       })
     })
     it("201: adds the recipe ID to the user who created it", () => {
@@ -422,14 +381,14 @@ describe("api/users/:username/recipes", () => {
         prep_time: 10,
         recipe_name: "scrambled eggs"
       }
-      const username = "teawalrusstorm"
+      const user_id = "0"
       return request(app)
-      .post(`/api/users/${username}/recipes`)
+      .post(`/api/users/${user_id}/recipes`)
       .send(body)
       .expect(201)
       .then(({body: {recipe}}) => {
         return request(app)
-        .get(`/api/users/${username}`)
+        .get(`/api/users/${user_id}`)
         .expect(200)
         .then(({body: {user}}) => {
           expect(user.recipes.includes(recipe.recipe_id)).toBe(true)
@@ -444,9 +403,9 @@ describe("api/users/:username/recipes", () => {
         prep_time: 10,
         recipe_name: "scrambled eggs"
       }
-      const username = "teawalrusstorm"
+      const user_id = "0"
       return request(app)
-      .post(`/api/users/${username}/recipes`)
+      .post(`/api/users/${user_id}/recipes`)
       .send(body)
       .expect(400)
       .then(({body: {message}}) => {
@@ -460,16 +419,16 @@ describe("api/users/:username/recipes", () => {
         instructions: "whisk the eggs",
         prep_time: 10,
       }
-      const username = "teawalrusstorm"
+      const user_id = "0"
       return request(app)
-      .post(`/api/users/${username}/recipes`)
+      .post(`/api/users/${user_id}/recipes`)
       .send(body)
       .expect(400)
       .then(({body: {message}}) => {
         expect(message).toBe("Bad request - key missing on object.")
       })
     })
-    it("404: returns not found when username doesn't exist", () => {
+    it("404: returns not found when user id doesn't exist", () => {
       const body = {
         cook_time: 15,
         ingredients: "eggs",
@@ -477,9 +436,9 @@ describe("api/users/:username/recipes", () => {
         prep_time: 10,
         recipe_name: "scrambled eggs"
       }
-      const username = "dinosaur"
+      const user_id = "2000"
       return request(app)
-      .post(`/api/users/${username}/recipes`)
+      .post(`/api/users/${user_id}/recipes`)
       .send(body)
         .expect(404)
         .then(({ body: { message } }) => {
