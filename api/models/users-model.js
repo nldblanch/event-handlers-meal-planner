@@ -9,6 +9,7 @@ const {
 } = require("firebase/firestore");
 const db = require("../../db/connection");
 const { checkGreenlist } = require("../utils/greenlist");
+const { checkGreenlist } = require("../utils/greenlist");
 
 exports.fetchUserByUserId = (user_id) => {
   const colRef = collection(db, "users");
@@ -63,14 +64,6 @@ exports.addUserToDatabase = (user) => {
     return checkGreenlist(greenlist, user)
     .then(() => {
       
-      // return this.checkEmailExists(user.email)
-      // .then((email) => {
-        //   if (email)
-        //     return Promise.reject({
-      //       status: 400,
-      //       message: "Bad request - email already exists.",
-      //     });
-      
       user.lists = [];
       user.recipes = [];
       
@@ -78,23 +71,14 @@ exports.addUserToDatabase = (user) => {
       
       return addDoc(usersRef, user);
     })
-    // })
+
     .then((user) => {
-      
-      
+ 
       
       return this.fetchUserByUserId(user.id);
     });
 };
-// exports.checkEmailExists = (email) => {
-//   const colRef = collection(db, "users");
-//   return getDocs(colRef).then((res) => {
-//     const user = res.docs.filter((doc) => {
-//       return doc.id === username;
-//     })[0];
-//     return user;
-//   });
-// };
+
 
 exports.addListToUser = (user_id, list_id) => {
   if (!list_id) {
