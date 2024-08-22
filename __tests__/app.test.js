@@ -112,7 +112,6 @@ describe("api/users/:user_id", () => {
         .get(`/api/users/${user_id}`)
         .expect(200)
         .then(({ body: { user } }) => {
-          // const { user_id, first_name, last_name, displayName, lists, avatarURL, recipes } = user;
           expect(user).toMatchObject({
             first_name: expect.any(String),
             last_name: expect.any(String),
@@ -122,12 +121,6 @@ describe("api/users/:user_id", () => {
             recipes: expect.any(Array)
           });
           expect(user.user_id).toBe("0")
-          // expect(typeof first_name).toBe("string");
-          // expect(typeof last_name).toBe("string");
-          // expect(typeof displayName).toBe("string")
-          // expect(Array.isArray(lists)).toBe(true);
-          // expect(typeof password).toBe("string");
-          // expect(Array.isArray(recipes)).toBe(true);
         });
     });
     it("404: returns not found when user does not exist", () => {
@@ -149,7 +142,7 @@ describe("/api/users", () => {
         first_name: "Nathan",
         last_name: "Blanch",
         displayName: "Nathan Blanch",
-        email: "saxewil683@iteradev.com",
+        user_id: "Lw33wLIJDHQpck8fZDQxnVAchvh2",
         avatarURL: "https://picsum.photos/id/237/200/300",
       };
       return request(app)
@@ -157,11 +150,12 @@ describe("/api/users", () => {
         .send(body)
         .expect(201)
         .then(({ body: { user } }) => {
+          
           expect(user).toMatchObject(body);
           const { lists, recipes, user_id } = user;
           expect(lists).toEqual([]);
           expect(recipes).toEqual([]);
-          expect(typeof user_id).toBe("string")
+          expect(user_id).toBe("Lw33wLIJDHQpck8fZDQxnVAchvh2")
         });
     });
     it("400: responds with bad request when incorrect keys given", () => {
@@ -169,7 +163,7 @@ describe("/api/users", () => {
         first_name: "Nathan",
         last_name: "Blanch",
         displayName: "Nathan Blanch",
-        email: "saxewil683@iteradev.com",
+        user_id: "Lw33wLIJDHQpck8fZDQxnVAchvh2",
         avatar: "https://picsum.photos/id/237/200/300",
       };
       return request(app)
@@ -185,7 +179,7 @@ describe("/api/users", () => {
         first_name: "Nathan",
         last_name: "Blanch",
         displayName: "Nathan Blanch",
-        email: "saxewil683@iteradev.com",
+        user_id: "Lw33wLIJDHQpck8fZDQxnVAchvh2",
       };
       return request(app)
         .post(`/api/users`)
@@ -195,22 +189,6 @@ describe("/api/users", () => {
           expect(message).toBe("Bad request - key missing on object.");
         });
     });
-    // it("400: responds with bad request when user already exists", () => {
-    //   const body = {
-    //     first_name: "Nathan",
-    //     last_name: "Blanch",
-    //     displayName: "Nathan Blanch",
-    //     email: "mrenard0@auda.org.au",
-    //     avatarURL: "https://picsum.photos/id/237/200/300",
-    //   };
-    //   return request(app)
-    //     .post(`/api/users`)
-    //     .send(body)
-    //     .expect(400)
-    //     .then(({ body: { message } }) => {
-    //       expect(message).toBe("Bad request - email already exists.");
-    //     });
-    // });
   });
 });
 

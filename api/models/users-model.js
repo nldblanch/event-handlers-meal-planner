@@ -47,34 +47,33 @@ exports.fetchRecipesByUserId = (user_id) => {
 };
 
 exports.addUserToDatabase = (user) => {
+  
   const keys = Object.keys(user);
   if (keys.length !== 5)
     return Promise.reject({
-      status: 400,
-      message: "Bad request - key missing on object.",
-    });
-    const greenlist = [
-      "email",
-      "first_name",
-      "last_name",
-      "avatarURL",
-      "displayName",
-    ];
-    return checkGreenlist(greenlist, user)
-    .then(() => {
-      
-      user.lists = [];
-      user.recipes = [];
-      
-      const usersRef = collection(db, "users");
-      
-      return addDoc(usersRef, user);
-    })
+  status: 400,
+  message: "Bad request - key missing on object.",
+});
+const greenlist = [
+  "user_id",
+  "first_name",
+  "last_name",
+  "avatarURL",
+  "displayName",
+];
+return checkGreenlist(greenlist, user)
+.then(() => {
+  
+  user.lists = [];
+  user.recipes = [];
+  
+  const usersRef = collection(db, "users");
+  const docRef = doc(usersRef, user.user_id)
+  return setDoc(docRef, user);
+})
 
-    .then((user) => {
- 
-      
-      return this.fetchUserByUserId(user.id);
+.then(() => {
+      return this.fetchUserByUserId(user.user_id);
     });
 };
 

@@ -7,7 +7,6 @@
         "user_id": "0",
         "first_name": "Arty",
         "last_name": "Kramer",
-        "email": "akramer5@illinois.edu",
         "displayName": "Arty Kramer",
         "lists": [],
         "recipes": [0]
@@ -21,16 +20,15 @@
       "displayName": "Nathan Blanch",
       "first_name": "Nathan",
       "last_name": "Blanch",
-      "email": "saxewil683@iteradev.com",
+      "user_id": "Lw33wLIJDHQpck8fZDQxnVAchvh2",
       "avatarURL": "image.url"
     },
     "exampleResponse": {
       "user": {
-        "user_id": "12345",
+        "user_id": "Lw33wLIJDHQpck8fZDQxnVAchvh2",
         "displayName": "Nathan Blanch",
         "first_name": "Nathan",
         "last_name": "Blanch",
-        "email": "saxewil683@iteradev.com",
         "avatarURL": "image.url",
         "lists": [],
         "recipes": []
@@ -54,7 +52,6 @@
         "displayName": "Nathan Blanch",
         "first_name": "Nathan",
         "last_name": "Blanch",
-        "email": "saxewil683@iteradev.com",
         "avatarURL": "image.url",
         "lists": [],
         "recipes": [1]
@@ -71,7 +68,6 @@
         "displayName": "Nathan Blanch",
         "first_name": "Nathan",
         "last_name": "Blanch",
-        "email": "saxewil683@iteradev.com",
         "avatarURL": "image.url",
         "lists": [],
         "recipes": []
