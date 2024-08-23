@@ -31,7 +31,14 @@ exports.postNewUser = (request, response, next) => {
     .then((user) => {
       response.status(201).send({ user });
     })
-    .catch(next);
+    .catch((error) => {
+      if (error.status === 404) {
+        const {message, user} = error
+        response.status(404).send({ message, user });
+      } else {
+        next(error)
+      }
+    });
 };
 
 exports.postListToUser = (request, response, next) => {

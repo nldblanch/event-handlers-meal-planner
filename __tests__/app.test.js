@@ -170,7 +170,7 @@ describe("/api/users", () => {
         .post(`/api/users`)
         .send(body)
         .expect(404)
-        .then(({ body: { message } }) => {
+        .then(({ body: {message} }) => {
           expect(message).toBe("User ID already exists.");
         });
     })

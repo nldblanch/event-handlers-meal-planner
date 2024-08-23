@@ -85,7 +85,6 @@ exports.checkUserExists = (user_id) => {
   const docRef = doc(usersRef, user_id)
   return getDoc(docRef)
   .then((snapshot) => {
-    console.log(snapshot.data())
     return snapshot.exists() ? Promise.reject({status: 404, message: "User ID already exists.", user: snapshot.data()}) : Promise.resolve()
   })
 }
