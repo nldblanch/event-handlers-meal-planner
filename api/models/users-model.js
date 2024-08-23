@@ -12,25 +12,24 @@ const { checkGreenlist } = require("../utils/greenlist");
 
 exports.fetchUserByUserId = (user_id) => {
   const colRef = collection(db, "users");
-  
+
   return getDoc(doc(colRef, user_id)).then((user) => {
     if (!user.exists())
       return Promise.reject({ status: 404, message: "User not found." });
     else {
-      return {user_id, ...user.data()}
-    };
+      return { user_id, ...user.data() };
+    }
   });
 };
 
 exports.fetchRecipesByUserId = (user_id) => {
-  
   const usersRef = collection(db, "users");
   const recipesRef = collection(db, "recipes");
   return getDoc(doc(usersRef, user_id)).then((user) => {
     if (!user.data()) {
       return Promise.reject({ status: 404, message: "User not found." });
     }
-    
+
     const recipes = user.data().recipes.map((recipeId) => {
       return getDoc(doc(recipesRef, String(recipeId)));
     });
@@ -47,48 +46,50 @@ exports.fetchRecipesByUserId = (user_id) => {
 };
 
 exports.addUserToDatabase = (user) => {
-  
   const keys = Object.keys(user);
   if (keys.length !== 5)
     return Promise.reject({
-  status: 400,
-  message: "Bad request - key missing on object.",
-});
-const greenlist = [
-  "user_id",
-  "first_name",
-  "last_name",
-  "avatarURL",
-  "displayName",
-];
-return checkGreenlist(greenlist, user)
-.then(() => {
-  return this.checkUserExists(user.user_id)
-})
-.then(() => {
-  
-  user.lists = [];
-  user.recipes = [];
-  
-  const usersRef = collection(db, "users");
-  const docRef = doc(usersRef, user.user_id)
-  return setDoc(docRef, user);
-})
+      status: 400,
+      message: "Bad request - key missing on object.",
+    });
+  const greenlist = [
+    "user_id",
+    "first_name",
+    "last_name",
+    "avatarURL",
+    "displayName",
+  ];
+  return checkGreenlist(greenlist, user)
+    .then(() => {
+      return this.checkUserExists(user.user_id);
+    })
+    .then(() => {
+      user.lists = [];
+      user.recipes = [];
 
-.then(() => {
+      const usersRef = collection(db, "users");
+      const docRef = doc(usersRef, user.user_id);
+      return setDoc(docRef, user);
+    })
+
+    .then(() => {
       return this.fetchUserByUserId(user.user_id);
     });
 };
 
 exports.checkUserExists = (user_id) => {
   const usersRef = collection(db, "users");
-  const docRef = doc(usersRef, user_id)
-  return getDoc(docRef)
-  .then((snapshot) => {
- 
-    return snapshot.exists() ? Promise.reject({status: 404, message: "User ID already exists.", user: {user_id: snapshot.id, ...snapshot.data()}}) : Promise.resolve()
-  })
-}
+  const docRef = doc(usersRef, user_id);
+  return getDoc(docRef).then((snapshot) => {
+    return snapshot.exists()
+      ? Promise.reject({
+          status: 404,
+          message: "User ID already exists.",
+          user: { user_id: snapshot.id, ...snapshot.data() },
+        })
+      : Promise.resolve();
+  });
+};
 
 exports.addListToUser = (user_id, list_id) => {
   if (!list_id) {
@@ -97,7 +98,7 @@ exports.addListToUser = (user_id, list_id) => {
       message: "Bad request - invalid key on object.",
     });
   }
-  if (typeof list_id !== "number") {
+  if (typeof list_id !== "number" && typeof list_id !== "string") {
     return Promise.reject({
       status: 400,
       message: "Bad request - invalid data type.",
@@ -195,7 +196,6 @@ exports.addRecipeToUser = (user_id, recipe) => {
 
       const newRecipes = [...userRecipes, result.id];
 
-      
       return Promise.all([
         { recipe_id: result.id, ...recipe, created_by: user_id },
         updateDoc(docRef, "recipes", newRecipes),
