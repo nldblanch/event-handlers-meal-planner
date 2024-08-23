@@ -158,6 +158,22 @@ describe("/api/users", () => {
           expect(user_id).toBe("Lw33wLIJDHQpck8fZDQxnVAchvh2")
         });
     });
+    it("404: does not add a user to the database when ID already exists", () => {
+      const body = {
+        first_name: "Nathan",
+        last_name: "Blanch",
+        displayName: "Nathan Blanch",
+        user_id: "1",
+        avatarURL: "https://picsum.photos/id/237/200/300",
+      };
+      return request(app)
+        .post(`/api/users`)
+        .send(body)
+        .expect(404)
+        .then(({ body: { message } }) => {
+          expect(message).toBe("User ID already exists.");
+        });
+    })
     it("400: responds with bad request when incorrect keys given", () => {
       const body = {
         first_name: "Nathan",
