@@ -63,6 +63,9 @@ const greenlist = [
 ];
 return checkGreenlist(greenlist, user)
 .then(() => {
+  return this.checkUserExists(user.user_id)
+})
+.then(() => {
   
   user.lists = [];
   user.recipes = [];
@@ -77,6 +80,14 @@ return checkGreenlist(greenlist, user)
     });
 };
 
+exports.checkUserExists = (user_id) => {
+  const usersRef = collection(db, "users");
+  const docRef = doc(usersRef, user_id)
+  return getDoc(docRef)
+  .then((snapshot) => {
+    return snapshot.exists() ? Promise.reject({status: 404, message: "User ID already exists."}) : Promise.resolve()
+  })
+}
 
 exports.addListToUser = (user_id, list_id) => {
   if (!list_id) {
@@ -183,6 +194,7 @@ exports.addRecipeToUser = (user_id, recipe) => {
 
       const newRecipes = [...userRecipes, result.id];
 
+      
       return Promise.all([
         { recipe_id: result.id, ...recipe, created_by: user_id },
         updateDoc(docRef, "recipes", newRecipes),
