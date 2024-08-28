@@ -2,7 +2,7 @@
 
 [![Contributors][contributors-shield]][contributors-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
-
+<img src="https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E" alt="javascript logo">
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
@@ -61,67 +61,11 @@ This database and server:
 - Is fully tested with Jest and SuperTest
 
 ### Built With
-
-<svg fill="none" viewBox="0 0 600 300" width="600" height="300" xmlns="http://www.w3.org/2000/svg">
-  <foreignObject width="100%" height="100%">
-    <div xmlns="http://www.w3.org/1999/xhtml">
-    <style>
-      .flex-container {
-        display: flex;
-        gap: 10px;
-        margin-left: -40px;
-      }
-      .list-item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        background-color: #bbb2;
-      }
-      .image {
-        object-fit: cover;
-      }
-    </style>
-      <ul class="flex-container">
-        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript">
-          <li class="list-item">
-            Javascript
-            <img src="https://cdn.iconscout.com/icon/premium/png-512-thumb/js-9305882-7694081.png?f=webp&w=512" class="image" alt="javascript logo" width="100">
-          </li>
-        </a>
-        <a href="https://nodejs.org/en">
-          <li class="list-item">
-            Node.js
-            <img src="https://cdn.iconscout.com/icon/premium/png-512-thumb/node-js-9305887-7694086.png?f=webp&w=512" class="image" alt="node js logo" width="100"/>
-          </li>
-          </a>
-        <a href="https://expressjs.com">
-          <li class="list-item">
-            Express.js
-            <img src="https://avatars.githubusercontent.com/u/5658226?s=200&v=4" class="image" alt="express js logo" width="100"/>
-         </li>
-        </a>
-        <a href="https://firebase.google.com">
-          <li class="list-item">
-            Firebase
-            <img src="https://firebase.google.com/static/images/brand-guidelines/logo-vertical.png" class="image" alt="express js logo" width="100"/>
-          </li>
-        </a>
-        <a href="https://jestjs.io">
-          <li class="list-item">
-            Jest
-            <img src="https://avatars.githubusercontent.com/u/103283236?s=48&v=4" class="image" alt="jest logo" width="100"/>
-          </li>
-        </a>
-        <a href="https://github.com/ladjs/supertest">
-          <li class="list-item">
-            SuperTest
-            <img src="https://placehold.co/400x400?text=SuperTest" class="image" alt="supertest logo" width="100"/>
-          </li>
-        </a>
-      </ul> 
-    </div>
-  </foreignObject>
-</svg>
+<img src="https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E" alt="javascript logo">
+<img src="https://img.shields.io/badge/Express%20js-000000?style=for-the-badge&logo=express&logoColor=white" alt="express logo"/>
+<img src="https://img.shields.io/badge/firebase-ffca28?style=for-the-badge&logo=firebase&logoColor=black" alt="firebase logo">
+<img src="https://img.shields.io/badge/Node%20js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="node logo">
+<img src="https://img.shields.io/badge/Jest-C21325?style=for-the-badge&logo=jest&logoColor=white" alt="jest logo" />
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
