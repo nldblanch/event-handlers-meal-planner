@@ -105,7 +105,7 @@ _Below is an example of how you can instruct your audience on installing and set
    ```
 4. Create environment files
    ```js
-   touch.env.test.env.production;
+   touch .env.test .env.production
    ```
 5. Enter your Firebase configurations as environment variables
 
