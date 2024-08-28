@@ -333,7 +333,7 @@ describe("/api/users/:user_id/lists", () => {
         });
     });
     it("400: responds bad request when invalid data type given for list", () => {
-      const body = { list_id: "hello" };
+      const body = { list_id: ["hello"] };
       const testUser = {
         user_id: "2",
         lists: [1],
