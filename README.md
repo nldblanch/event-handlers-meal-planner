@@ -59,7 +59,7 @@
 
 ![Daily Dish Backend Screen Shot][product-screenshot]
 
-This backend is half of the story for our Northcoders[https://northcoders.com] final group project. The other half can be found in this repo[https://github.com/coderRaph1/FE---Meal-Planner].
+This backend is half of the story for our Northcoders[NC-url] final group project. The other half can be found in this repo[FE-repo-url].
 
 This database and server:
 * Handles and manipulates data for users, recipes, and lists
@@ -187,7 +187,8 @@ Use this space to list resources you find helpful and would like to give credit 
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[FE-repo-url]: https://github.com/coderRaph1/FE---Meal-Planner
+[NC-url]: https://northcoders.com
 [contributors-shield]: https://img.shields.io/github/contributors/nldblanch/event-handlers-meal-planner-BE.svg?style=for-the-badge
 [contributors-url]: https://github.com/nldblanch/event-handlers-meal-planner-BE/graphs/contributors
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
