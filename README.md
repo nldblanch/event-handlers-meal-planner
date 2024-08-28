@@ -14,7 +14,6 @@
   <h3 align="center">Best-README-Template</h3>
 
   <p align="center">
-    An awesome README template to jumpstart your projects!
     <br />
     <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
     <br />
@@ -59,7 +58,7 @@
 
 ![Daily Dish Backend Screen Shot][product-screenshot]
 
-This backend is half of the story for our [Northcoders](NC-url) final group project. The other half can be found in this [repo](FE-repo-url).
+This backend is half of the story for our ![Northcoders][NC-url] final group project. The other half can be found in this [repo](FE-repo-url).
 
 This database and server:
 * Handles and manipulates data for users, recipes, and lists
