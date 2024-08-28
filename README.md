@@ -2,7 +2,11 @@
 
 [![Contributors][contributors-shield]][contributors-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
-
+<img src="https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E" alt="javascript logo">
+<img src="https://img.shields.io/badge/Express%20js-000000?style=for-the-badge&logo=express&logoColor=white" alt="express logo"/>
+<img src="https://img.shields.io/badge/firebase-ffca28?style=for-the-badge&logo=firebase&logoColor=black" alt="firebase logo">
+<img src="https://img.shields.io/badge/Node%20js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="node logo">
+<img src="https://img.shields.io/badge/Jest-C21325?style=for-the-badge&logo=jest&logoColor=white" alt="jest logo" />
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
@@ -62,50 +66,11 @@ This database and server:
 
 ### Built With
 
-<ul style="display:flex;gap:5px;margin-left:-40px;">
-  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript">
-    <li style="display:flex;flex-direction:column;align-items:center;background-color:#bbb2;">
-    Javascript
-    <img src="https://cdn.iconscout.com/icon/premium/png-512-thumb/js-9305882-7694081.png?f=webp&w=512" style="object-fit:cover;" alt="javascript logo" width="100">
-    </li>
-</a>
-
-<a href="https://nodejs.org/en">
-<li style="display:flex;flex-direction:column;align-items:center;background-color:#bbb2;">
-Node.js
-<img src="https://cdn.iconscout.com/icon/premium/png-512-thumb/node-js-9305887-7694086.png?f=webp&w=512" style="object-fit:cover;" alt="node js logo" width="100"/>
-</li>
-</a>
-
-<a href="https://expressjs.com">
-<li style="display:flex;flex-direction:column;align-items:center;background-color:#bbb2;">
-Express.js
-<img src="https://avatars.githubusercontent.com/u/5658226?s=200&v=4" style="object-fit:cover;" alt="express js logo" width="100"/>
-</li>
-</a>
-
-<a href="https://firebase.google.com">
-<li style="display:flex;flex-direction:column;align-items:center;background-color:#bbb2;">
-Firebase
-<img src="https://firebase.google.com/static/images/brand-guidelines/logo-vertical.png" style="object-fit:cover;" alt="express js logo" width="100"/>
-</li>
-</a>
-
-<a href="https://jestjs.io">
-<li style="display:flex;flex-direction:column;align-items:center;background-color:#bbb2;">
-Jest
-<img src="https://avatars.githubusercontent.com/u/103283236?s=48&v=4" style="object-fit:cover;" alt="jest logo" width="100"/>
-</li>
-</a>
-
-<a href="https://github.com/ladjs/supertest">
-<li style="display:flex;flex-direction:column;align-items:center;background-color:#bbb2;">
-SuperTest
-<img src="https://placehold.co/400x400?text=SuperTest" style="object-fit:cover;" alt="supertest logo" width="100"/>
-</li>
-</a>
-
-</ul>
+<img src="https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E" alt="javascript logo">
+<img src="https://img.shields.io/badge/Express%20js-000000?style=for-the-badge&logo=express&logoColor=white" alt="express logo"/>
+<img src="https://img.shields.io/badge/firebase-ffca28?style=for-the-badge&logo=firebase&logoColor=black" alt="firebase logo">
+<img src="https://img.shields.io/badge/Node%20js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="node logo">
+<img src="https://img.shields.io/badge/Jest-C21325?style=for-the-badge&logo=jest&logoColor=white" alt="jest logo" />
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -144,25 +109,27 @@ _Below is an example of how you can instruct your audience on installing and set
    ```
 5. Enter your Firebase configurations as environment variables
 
-      _You can find these by going to Firebase Project Settings and adding a new web app. It will give an example of what firebaseConfig looks like._
+   _You can find these by going to Firebase Project Settings and adding a new web app. It will give an example of what firebaseConfig looks like._
+
    ```js
    FIREBASECONFIG = "{"apiKey":"abcde","authDomain":"meal-planner.firebaseapp.com","projectId":"meal-planner","storageBucket":"meal-planner.appspot.com","messagingSenderId":"12345","appId":"1:12345:web:da1b2c3","measurementId":"G-A0B1C2"}"
    ```
+
    _Note: it needs to be a JSON string, like above. It looks messy, but you can console log JSON.stringify(object) to visualise this quickly._
-   
+
    ```js
-    const config = {
-      apiKey: "",
-      authDomain: "",
-      projectId: "",
-      storageBucket: "",
-      messagingSenderId: "",
-      appId: "",
-      measurementId: ""
-    }
-    console.log(JSON.strignify(config))
+   const config = {
+     apiKey: "",
+     authDomain: "",
+     projectId: "",
+     storageBucket: "",
+     messagingSenderId: "",
+     appId: "",
+     measurementId: "",
+   };
+   console.log(JSON.strignify(config));
    ```
-  
+
 6. Change git remote url to avoid accidental pushes to base project
    ```sh
    git remote set-url origin github_username/repo_name
@@ -180,6 +147,7 @@ _Below is an example of how you can instruct your audience on installing and set
 ```bash
 npm run seed-prod
 ```
+
 #### 2. Get your API hosted using render
 
 Sign up to [Render](https://render.com/). Once you're signed up, click on the "New +" button and create a new `Web Service`.
