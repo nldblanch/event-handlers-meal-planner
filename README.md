@@ -226,7 +226,7 @@ Use this space to list resources you find helpful and would like to give credit 
 [contributors-url]: [https://github.com/nldblanch/event-handlers-meal-planner-BE/graphs/contributors]
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/othneildrew
-[product-screenshot]: https://github.com/user-attachments/assets/51a926c7-bfd9-4ae9-a045-6b7acdc99d1b](https://private-user-images.githubusercontent.com/37803149/362219979-51a926c7-bfd9-4ae9-a045-6b7acdc99d1b.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MjQ4MzkxNjMsIm5iZiI6MTcyNDgzODg2MywicGF0aCI6Ii8zNzgwMzE0OS8zNjIyMTk5NzktNTFhOTI2YzctYmZkOS00YWU5LWEwNDUtNmI3YWNkYzk5ZDFiLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDA4MjglMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQwODI4VDA5NTQyM1omWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTkwMzFkYTM3NjkxNDMxZDJmNTNjNDczMmQzZjU4ZmRhYzQ4YTNlZTEyZTcwNmQ1ODEyMDVkZTBkMDBlOGNjZTMmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JmFjdG9yX2lkPTAma2V5X2lkPTAmcmVwb19pZD0wIn0.ICALI5YcRFBwdG6WoeBK1IzHh7jYMR5S0HrPnruv6ZE
+[product-screenshot]: https://github.com/user-attachments/assets/51a926c7-bfd9-4ae9-a045-6b7acdc99d1b
 [Svelte.dev]: https://img.shields.io/badge/Svelte-4A4A55?style=for-the-badge&logo=svelte&logoColor=FF3E00
 [Svelte-url]: https://svelte.dev/
 
