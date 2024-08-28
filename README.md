@@ -47,9 +47,6 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
@@ -60,7 +57,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Daily Dish Backend Screen Shot]][product-screenshot]
+![Daily Dish Backend Screen Shot][product-screenshot]
 
 This backend is half of the story for our Northcoders[https://northcoders.com] final group project. The other half can be found in this repo[https://github.com/coderRaph1/FE---Meal-Planner].
 
@@ -76,6 +73,7 @@ This database and server:
 ### Built With
 
 [![Svelte][Svelte.dev]][Svelte-url]
+
 [!Svelte][Svelte.dev]][Svelte-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
