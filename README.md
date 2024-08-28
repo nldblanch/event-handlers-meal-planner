@@ -60,19 +60,14 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-![Daily Dish Backend Screen Shot][product-screenshot]
+[![Daily Dish Backend Screen Shot]][product-screenshot]
 
+This backend is half of the story for our Northcoders[https://northcoders.com] final group project. The other half can be found in this repo[https://github.com/coderRaph1/FE---Meal-Planner].
 
-There are many great README templates available on GitHub; however, I didn't find one that really suited my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need -- I think this is it.
-
-Here's why:
-* Your time should be focused on creating something amazing. A project that solves a problem and helps others
-* You shouldn't be doing the same tasks over and over like creating a README from scratch
-* You should implement DRY principles to the rest of your life :smile:
-
-Of course, no one template will serve all projects since your needs may be different. So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue. Thanks to all the people have contributed to expanding this template!
-
-Use the `BLANK_README.md` to get started.
+This database and server:
+* Handles and manipulates data for users, recipes, and lists
+* Accepts GET, POST, PATCH and DELETE to the Firebase Firestore Database
+* Is fully tested with Jest and Supertest
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -80,10 +75,8 @@ Use the `BLANK_README.md` to get started.
 
 ### Built With
 
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
-
-
-* [![Svelte][Svelte.dev]][Svelte-url]
+[![Svelte][Svelte.dev]][Svelte-url]
+[!Svelte][Svelte.dev]][Svelte-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -110,17 +103,22 @@ _Below is an example of how you can instruct your audience on installing and set
 1. Get a free API Key at [https://example.com](https://example.com)
 2. Clone the repo
    ```sh
-   git clone https://github.com/github_username/repo_name.git
+   git clone https://github.com/nldblanch/event-handlers-meal-planner-BE.git
    ```
 3. Install NPM packages
    ```sh
    npm install
    ```
-4. Enter your API in `config.js`
+4. Create environment files
    ```js
-   const API_KEY = 'ENTER YOUR API';
+   `.env.test` or `.env.production` 
    ```
-5. Change git remote url to avoid accidental pushes to base project
+5. Enter your Firebase configuration in `.env.test` or `.env.production`
+   ```js
+   FIREBASECONFIG="API";
+   ```
+   _Note: it needs to be a JSON string. Try console logging JSON.stringify(object) to see get this quickly._
+6. Change git remote url to avoid accidental pushes to base project
    ```sh
    git remote set-url origin github_username/repo_name
    git remote -v # confirm the changes
@@ -140,41 +138,11 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
-
-<!-- ROADMAP -->
-## Roadmap
-
-- [x] Add Changelog
-- [x] Add back to top links
-- [ ] Add Additional Templates w/ Examples
-- [ ] Add "components" document to easily copy & paste sections of the readme
-- [ ] Multi-language Support
-    - [ ] Chinese
-    - [ ] Spanish
-
-See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a full list of proposed features (and known issues).
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- CONTRIBUTING -->
-## Contributing
-
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
 
 ### Top contributors:
 
-<a href="https://github.com/othneildrew/Best-README-Template/graphs/contributors">
+<a href="https://github.com/nldblanch/event-handlers-meal-planner-BE/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=othneildrew/Best-README-Template" alt="contrib.rocks image" />
 </a>
 
@@ -223,7 +191,7 @@ Use this space to list resources you find helpful and would like to give credit 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [contributors-shield]: https://img.shields.io/github/contributors/nldblanch/event-handlers-meal-planner-BE.svg?style=for-the-badge
-[contributors-url]: [https://github.com/nldblanch/event-handlers-meal-planner-BE/graphs/contributors]
+[contributors-url]: https://github.com/nldblanch/event-handlers-meal-planner-BE/graphs/contributors
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/othneildrew
 [product-screenshot]: https://github.com/user-attachments/assets/51a926c7-bfd9-4ae9-a045-6b7acdc99d1b
