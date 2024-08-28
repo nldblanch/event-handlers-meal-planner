@@ -58,7 +58,7 @@
 
 ![Daily Dish Backend Screen Shot][product-screenshot]
 
-This backend is half of the story for our [Northcoders][NC-url] final group project. The other half can be found in this [repo](FE-repo-url).
+This backend is half of the story for our [Northcoders][NC-url] final group project. The other half can be found in this [repo][FE-repo-url].
 
 This database and server:
 * Handles and manipulates data for users, recipes, and lists
@@ -71,7 +71,9 @@ This database and server:
 
 ### Built With
 
-[![Svelte][Svelte.dev]][Svelte-url]
+* [![Svelte][Svelte.dev]][Svelte-url]
+* [![Javascript][JS.dev]][JS-url]
+* [![Node.js][Node.dev]][Node-url]
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -96,7 +98,7 @@ This is an example of how to list things you need to use the software and how to
 
 _Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
 
-1. Get a free API Key at [https://example.com](https://example.com)
+1. Get a free Firestore Database at [https://firebase.google.com](https://firebase.google.com)
 2. Clone the repo
    ```sh
    git clone https://github.com/nldblanch/event-handlers-meal-planner-BE.git
@@ -190,8 +192,13 @@ Use this space to list resources you find helpful and would like to give credit 
 [contributors-shield]: https://img.shields.io/github/contributors/nldblanch/event-handlers-meal-planner-BE.svg?style=for-the-badge
 [contributors-url]: https://github.com/nldblanch/event-handlers-meal-planner-BE/graphs/contributors
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/othneildrew
+[linkedin-url]: https://linkedin.com/in/nathanblanch
 [product-screenshot]: https://github.com/user-attachments/assets/51a926c7-bfd9-4ae9-a045-6b7acdc99d1b
 [Svelte.dev]: https://img.shields.io/badge/Svelte-4A4A55?style=for-the-badge&logo=svelte&logoColor=FF3E00
 [Svelte-url]: https://svelte.dev/
+[Node-url]: https://nodejs.org/en 
+[Node.dev]: https://cdn.iconscout.com/icon/premium/png-512-thumb/node-js-9305887-7694086.png?f=webp&w=512
+[JS-url]: https://developer.mozilla.org/en-US/docs/Web/JavaScript
+[JS.dev]: https://cdn.iconscout.com/icon/premium/png-512-thumb/js-9305882-7694081.png?f=webp&w=512
+[Firebase-url]: https://firebase.google.com
 
