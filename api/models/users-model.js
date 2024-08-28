@@ -132,7 +132,7 @@ exports.removeListfromUser = (user_id, list_id) => {
       message: "Bad request - invalid key on object.",
     });
   }
-  if (typeof list_id !== "number") {
+  if (typeof list_id !== "number" && typeof list_id !== "string") {
     return Promise.reject({
       status: 400,
       message: "Bad request - invalid data type.",
