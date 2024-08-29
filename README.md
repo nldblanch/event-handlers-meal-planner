@@ -15,7 +15,9 @@
     <a href="https://github.com/nldblanch/event-handlers-meal-planner-BE"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://event-handlers-meal-planner-be.onrender.com/api">View Demo</a>
+    <a href="https://thedailydish.netlify.app/">View Frontend Demo</a>
+    ·
+    <a href="https://event-handlers-meal-planner-be.onrender.com/api">View API Demo</a>
     ·
     <a href="https://github.com/nldblanch/event-handlers-meal-planner-BE/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
     ·
