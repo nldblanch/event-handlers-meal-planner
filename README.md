@@ -196,4 +196,4 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/nathanblanch
 [product-screenshot]: https://github.com/user-attachments/assets/51a926c7-bfd9-4ae9-a045-6b7acdc99d1b
-[FE-host]: https://google.com
+[FE-host]: https://thedailydish.netlify.app/
