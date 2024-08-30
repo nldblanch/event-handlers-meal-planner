@@ -5,7 +5,7 @@ const {
   postItem,
   deleteList,
   deleteItem,
-} = require("../../controllers/lists-controllers");
+} = require("../controllers/lists-controllers");
 
 const listsRouter = require("express").Router();
 

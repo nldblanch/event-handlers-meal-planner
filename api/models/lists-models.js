@@ -6,7 +6,7 @@ const {
   addDoc,
   deleteDoc,
 } = require("firebase/firestore");
-const db = require("../db/connection");
+const db = require("../../db/connection");
 const { list } = require("firebase/storage");
 
 const listRef = collection(db, "lists");

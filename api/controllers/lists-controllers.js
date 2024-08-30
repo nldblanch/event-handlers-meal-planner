@@ -1,4 +1,4 @@
-const { request } = require("../api/app");
+const { request } = require("../app");
 const {
   fetchListsByUserId,
   fetchListById,

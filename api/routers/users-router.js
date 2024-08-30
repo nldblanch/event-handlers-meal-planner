@@ -1,11 +1,11 @@
-const { getListsByUserId } = require("../../controllers/lists-controllers");
+const { getListsByUserId } = require("../controllers/lists-controllers");
 const {
   getUserByUserId,
   postNewUser,
   postListToUser,
   deleteListFromUser,
   postRecipeToUser,
-  getRecipesByUserId
+  getRecipesByUserId,
 } = require("../controllers/users-controller");
 
 const usersRouter = require("express").Router();
