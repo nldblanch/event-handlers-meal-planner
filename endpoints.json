@@ -45,7 +45,7 @@
   "POST /api/users/:user_id/lists": {
     "description": "allows client to post a list to a user",
     "queries": [],
-    "format": { "list_id": 1 },
+    "format": { "list_name": "my list" },
     "exampleResponse": {
       "user": {
         "user_id": "12345",
@@ -53,7 +53,7 @@
         "first_name": "Nathan",
         "last_name": "Blanch",
         "avatarURL": "image.url",
-        "lists": [],
+        "lists": ["abcdefg"],
         "recipes": [1]
       }
     }
