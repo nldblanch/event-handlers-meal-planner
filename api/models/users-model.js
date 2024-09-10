@@ -94,7 +94,8 @@ exports.addListToUser = (user_id, list_name) => {
       message: "Bad request - invalid key on object.",
     });
   }
-  return this.checkUserExists(user_id).then(({ user }) => {
+  return this.checkUserExists(user_id)
+  .then(({ user }) => {
     if (typeof list_name !== "string") {
       return Promise.reject({
         status: 400,
@@ -103,23 +104,17 @@ exports.addListToUser = (user_id, list_name) => {
     }
     const listRef = collection(db, "lists");
     const list = { list: [], list_name, isPrivate: true };
-    return Promise.all([user, addDoc(listRef, list)]).then(([user, res]) => {
+    return Promise.all([user, addDoc(listRef, list)])
+    .then(([user, res]) => {
+      const userRef = collection(db, "users")
+      const docRef = doc(userRef, user_id); 
       const lists = [...user.lists, res.id];
-      return { ...user, lists };
+      return Promise.all([user, lists, updateDoc(docRef, "lists", lists)])
+      .then(([user, lists]) => { 
+        return { ...user, lists };
+      })
     });
   });
-  return this.fetchUserByUserId(user_id)
-    .then((user) => {
-      if (user.lists.includes(list_id)) {
-        return Promise.reject({
-          status: 400,
-          message: "Bad request - list already assigned to user.",
-        });
-      }
-    })
-    .then(([user]) => {
-      return user;
-    });
 };
 
 exports.removeListfromUser = (user_id, list_id) => {
