@@ -77,7 +77,7 @@ describe("/api/users/:user_id/lists", () => {
   });
   describe("POST", () => {
     it("201: responds with the user with the given list added", () => {
-      const body = { list_id: 2 };
+      const body = { list_name: "my list" };
       const testUser = {
         user_id: "2",
         lists: [1],
@@ -89,11 +89,33 @@ describe("/api/users/:user_id/lists", () => {
         .then(({ body: { user } }) => {
           expect(user).toMatchObject({
             user_id: "2",
-            lists: [1, 2],
           });
+          expect(typeof user.lists[1]).toBe("string");
         });
     });
-    it("400: responds bad request when list_id key not given", () => {
+    it("201: creates a new list in the lists table", () => {
+      const body = { list_name: "my list" };
+      const testUser = {
+        user_id: "2",
+        lists: [1],
+      };
+      return request(app)
+        .post(`/api/users/${testUser.user_id}/lists`)
+        .send(body)
+        .expect(201)
+        .then(({ body: { user } }) => {
+          const { lists } = user;
+          const id = lists[lists.length - 1];
+          return request(app)
+            .get(`/api/lists/${id}`)
+            .expect(200)
+            .then(({ body: { list } }) => {
+              expect(list.list_id).toBe(id);
+              expect(list.list_name).toBe("my list");
+            });
+        });
+    });
+    it("400: responds bad request when list_name key not given", () => {
       const body = { other_key: 1 };
       const testUser = {
         user_id: "2",
@@ -107,22 +129,8 @@ describe("/api/users/:user_id/lists", () => {
           expect(message).toBe("Bad request - invalid key on object.");
         });
     });
-    it("400: responds bad request when user already has list in profile", () => {
-      const body = { list_id: 1 };
-      const testUser = {
-        user_id: "2",
-        lists: [1],
-      };
-      return request(app)
-        .post(`/api/users/${testUser.user_id}/lists`)
-        .send(body)
-        .expect(400)
-        .then(({ body: { message } }) => {
-          expect(message).toBe("Bad request - list already assigned to user.");
-        });
-    });
     it("400: responds bad request when invalid data type given for list", () => {
-      const body = { list_id: ["hello"] };
+      const body = { list_name: ["hello"] };
       const testUser = {
         user_id: "2",
         lists: [1],
@@ -238,9 +246,9 @@ describe("api/users/:user_id", () => {
             displayName: expect.any(String),
             lists: expect.any(Array),
             avatarURL: expect.any(String),
-            recipes: expect.any(Array)
+            recipes: expect.any(Array),
           });
-          expect(user.user_id).toBe("0")
+          expect(user.user_id).toBe("0");
         });
     });
     it("404: returns not found when user does not exist", () => {
@@ -270,30 +278,13 @@ describe("/api/users", () => {
         .send(body)
         .expect(201)
         .then(({ body: { user } }) => {
-          
           expect(user).toMatchObject(body);
           const { lists, recipes, user_id } = user;
           expect(lists).toEqual([]);
           expect(recipes).toEqual([]);
-          expect(user_id).toBe("Lw33wLIJDHQpck8fZDQxnVAchvh2")
+          expect(user_id).toBe("Lw33wLIJDHQpck8fZDQxnVAchvh2");
         });
     });
-    it("404: does not add a user to the database when ID already exists", () => {
-      const body = {
-        first_name: "Nathan",
-        last_name: "Blanch",
-        displayName: "Nathan Blanch",
-        user_id: "1",
-        avatarURL: "https://picsum.photos/id/237/200/300",
-      };
-      return request(app)
-        .post(`/api/users`)
-        .send(body)
-        .expect(404)
-        .then(({ body: {message} }) => {
-          expect(message).toBe("User ID already exists.");
-        });
-    })
     it("400: responds with bad request when incorrect keys given", () => {
       const body = {
         first_name: "Nathan",
@@ -337,7 +328,7 @@ describe("/api/users/:user_id/recipes", () => {
         .expect(200)
         .then(({ body: { recipes } }) => {
           expect(Array.isArray(recipes)).toBe(true);
-          expect(recipes.length).toBeGreaterThan(0)
+          expect(recipes.length).toBeGreaterThan(0);
           recipes.forEach((recipe) => {
             expect(recipe).toMatchObject({
               recipe_id: expect.any(String),

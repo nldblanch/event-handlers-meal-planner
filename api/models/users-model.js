@@ -61,9 +61,6 @@ exports.addUserToDatabase = (user) => {
   ];
   return checkGreenlist(greenlist, user)
     .then(() => {
-      return this.checkUserExists(user.user_id);
-    })
-    .then(() => {
       user.lists = [];
       user.recipes = [];
 
@@ -82,29 +79,35 @@ exports.checkUserExists = (user_id) => {
   const docRef = doc(usersRef, user_id);
   return getDoc(docRef).then((snapshot) => {
     return snapshot.exists()
-      ? Promise.reject({
+      ? Promise.resolve({ user: { user_id: snapshot.id, ...snapshot.data() } })
+      : Promise.reject({
           status: 404,
-          message: "User ID already exists.",
-          user: { user_id: snapshot.id, ...snapshot.data() },
-        })
-      : Promise.resolve();
+          message: "User doesn't exist.",
+        });
   });
 };
 
-exports.addListToUser = (user_id, list_id) => {
-  if (!list_id) {
+exports.addListToUser = (user_id, list_name) => {
+  if (!list_name) {
     return Promise.reject({
       status: 400,
       message: "Bad request - invalid key on object.",
     });
   }
-  if (typeof list_id !== "number" && typeof list_id !== "string") {
-    return Promise.reject({
-      status: 400,
-      message: "Bad request - invalid data type.",
+  return this.checkUserExists(user_id).then(({ user }) => {
+    if (typeof list_name !== "string") {
+      return Promise.reject({
+        status: 400,
+        message: "Bad request - invalid data type.",
+      });
+    }
+    const listRef = collection(db, "lists");
+    const list = { list: [], list_name, isPrivate: true };
+    return Promise.all([user, addDoc(listRef, list)]).then(([user, res]) => {
+      const lists = [...user.lists, res.id];
+      return { ...user, lists };
     });
-  }
-  const userRef = collection(db, "users");
+  });
   return this.fetchUserByUserId(user_id)
     .then((user) => {
       if (user.lists.includes(list_id)) {
@@ -113,12 +116,6 @@ exports.addListToUser = (user_id, list_id) => {
           message: "Bad request - list already assigned to user.",
         });
       }
-      const docRef = doc(userRef, user_id);
-      const newLists = [...user.lists, list_id];
-      return Promise.all([
-        { ...user, lists: newLists },
-        updateDoc(docRef, "lists", newLists),
-      ]);
     })
     .then(([user]) => {
       return user;

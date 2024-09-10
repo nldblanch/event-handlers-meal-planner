@@ -43,8 +43,8 @@ exports.postNewUser = (request, response, next) => {
 
 exports.postListToUser = (request, response, next) => {
   const { user_id } = request.params;
-  const { list_id } = request.body;
-  addListToUser(user_id, list_id)
+  const {list_name} = request.body;
+  addListToUser(user_id, list_name)
     .then((user) => {
       response.status(201).send({ user });
     })
