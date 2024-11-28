@@ -15,6 +15,9 @@
     <a href="https://github.com/nldblanch/event-handlers-meal-planner-BE"><strong>Explore the docs »</strong></a>
     <br />
     <br />
+    <a href="https://github.com/nldblanch/meal-planner"><strong>Explore the front end docs »</strong></a>
+    <br />
+    <br />
     <a href="https://www.linkedin.com/in/nathanblanch/details/projects/urn:li:fsd_profileProject:(ACoAAEmwM_8B7pPdmBnH6-FrYgJKQ0Ki4haqAnw,1649906373)/treasury/">View Frontend Demo</a>
     ·
     <a href="https://event-handlers-meal-planner-be.onrender.com/api">View API Demo</a>
