@@ -8,14 +8,14 @@
 <div align="center">
 <h1>Daily Dish</h1>
   <h2 align="center">Backend API for Meal Planner</h2>
-  <h3 align="center">by Event Handlers</h3>
+  <h3 align="center">by Nathan Blanch</h3>
 
   <p align="center">
     <br />
     <a href="https://github.com/nldblanch/event-handlers-meal-planner-BE"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://thedailydish.netlify.app/">View Frontend Demo</a>
+    <a href="https://www.linkedin.com/in/nathanblanch/details/projects/urn:li:fsd_profileProject:(ACoAAEmwM_8B7pPdmBnH6-FrYgJKQ0Ki4haqAnw,1649906373)/treasury/">View Frontend Demo</a>
     ·
     <a href="https://event-handlers-meal-planner-be.onrender.com/api">View API Demo</a>
     ·
@@ -191,11 +191,11 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 
 <!-- MARKDOWN LINKS & IMAGES -->
 
-[FE-repo-url]: https://github.com/coderRaph1/FE---Meal-Planner
+[FE-repo-url]: https://github.com/nldblanch/meal-planner
 [NC-url]: https://northcoders.com
 [contributors-shield]: https://img.shields.io/github/contributors/nldblanch/event-handlers-meal-planner-BE.svg?style=for-the-badge
 [contributors-url]: https://github.com/nldblanch/event-handlers-meal-planner-BE/graphs/contributors
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/nathanblanch
 [product-screenshot]: https://github.com/user-attachments/assets/51a926c7-bfd9-4ae9-a045-6b7acdc99d1b
-[FE-host]: https://thedailydish.netlify.app/
+[FE-host]: https://www.linkedin.com/in/nathanblanch/details/projects/urn:li:fsd_profileProject:(ACoAAEmwM_8B7pPdmBnH6-FrYgJKQ0Ki4haqAnw,1649906373)/treasury/
