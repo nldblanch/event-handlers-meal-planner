@@ -6,8 +6,8 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-<h1>Daily Dish</h1>
-  <h2 align="center">Backend API for Meal Planner</h2>
+<h1>Meal Planner</h1>
+  <h2 align="center">Backend API for React Native app</h2>
   <h3 align="center">by Nathan Blanch</h3>
 
   <p align="center">
